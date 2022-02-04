@@ -4,3 +4,4 @@ data_base <- read.csv(file="inconnu pour l'instant.csv")
 summary(data_base)
 View(data_base)
 
+marie =1
