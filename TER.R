@@ -4,6 +4,6 @@ data_base <- read.csv(file="inconnu pour l'instant.csv")
 summary(data_base)
 View(data_base)
 
-clemence = 3
+clemence = 4
 clemence
 
