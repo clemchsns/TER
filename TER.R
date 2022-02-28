@@ -1,8 +1,5 @@
 # ouverture de la base de données
-data_base <- read.csv(file="Données/artistes_concerts_transmusicales.csv",header=TRUE,sep=";",encoding = "UTF-8") 
-
-summary(data_base)
+data_base <- read.csv("NBA_Season_Data.csv",sep=",",header =TRUE)
 View(data_base)
-
 
 
