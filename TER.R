@@ -10,4 +10,6 @@ tapply(data_base$Age, data_base$Équipe, mean)
 data_players <-read.csv("../Data/players.csv",sep=",",header =TRUE)
 View(data_players)
 
+colnames(data_players) = c("X_i","birthDate","birthPlace","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","college","Supp","Supp","Supp","Supp","height","highSchool","name","position","shoots","weight")
+data_players = data_players[,-c(4:13,15:18)]
 
