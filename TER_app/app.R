@@ -13,13 +13,13 @@ library(dashboard)
 library(shinydashboard)
 
 # ouverture de la base de donnees
-data_base <- read.csv("~/L3 MIASHS/S2/TER/Data/NBA_Season_Data.csv", stringsAsFactors=TRUE)
+data_base <- read.csv("../Data/NBA_Season_Data.csv", stringsAsFactors=TRUE)
 
 colnames(data_base) <- c("Annee", "Equipe", "Joueur", "Age", "NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "NbTirs", "JoueurID", "Supp", "Supp", "Supp", "Supp", "EfficaciteTirEquipe", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp")
 data_base <- data_base[,c(1:17, 31:32, 37)]
 tapply(data_base$Age, data_base$Equipe, mean)
 
-data_players <-read.csv("~/L3 MIASHS/S2/TER/Data/players.csv", header=FALSE)
+data_players <-read.csv("../Data/players.csv", header=FALSE)
 colnames(data_players) = c("X_i","DateNaiss","LieuNaiss","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","Universite","Supp","Supp","Supp","Supp","Taille","Lycee","Nom","position","MainTire","Poids")
 data_players = data_players[,c(1:3,14,19:24)]
 
