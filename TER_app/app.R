@@ -17,18 +17,21 @@ ui <- dashboardPage(
     dashboardHeader(title = "Menu"),
     dashboardSidebar(
         sidebarMenu(
-            menuItem("Iris", tabName = "iris", icon = icon("basketball-ball")),
-            menuItem("Cars", tabName = "cars", icon = icon("running"))
+            menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball")),
+            menuItem("Clubs", tabName = "Clubs", icon = icon("running")),
+            menuItem("Joueurs", tabName = "Joueurs", icon = icon("arrow-right")),
+            menuItem("Base de données des clubs", tabName = "DonClubs", icon = icon("arrow-right")),
+            menuItem("Base de données des joueurs", tabName = "DonJoueurs", icon = icon("arrow-right"))
         )
     ),
     dashboardBody(
         tabItems(
-            tabItem("iris",
+            tabItem("Accueil",
                     fluidPage(
-                        h1("Iris")
+                        h1("Accueil")
                     )
             ),
-            tabItem("cars",
+            tabItem("Clubs",
                     fluidPage(  #faire la division en 2 parties
                         sidebarLayout(
                             sidebarPanel( #afficher la barre laterale ou se trouve les inputs
