@@ -47,7 +47,21 @@ ui <- dashboardPage(
                             )
                         )
                     )
-            )
+            ),
+            tabItem("Joueurs",
+                    fluidPage(
+                        h1("Caratéristiques des joueurs")
+                    )),
+            tabItem("DonClubs",
+                    fluidPage(
+                        h1("Base de données des Clubs"),
+                        verbatimTextOutput('view1')
+                    )),
+            tabItem("DonJoueurs",
+                    fluidPage(
+                        h1("Base de données des joueurs"),
+                        verbatimTextOutput('view2')
+                    ))
         )
     )
 )
@@ -67,6 +81,14 @@ server <- function(input, output) {
     #Histogramme (output$id_sortie de plotOutput)
     output$hist <- renderPlot({
         hist(data_base[,input$var1],main="Histogramme",xlab=input$var1)
+    })
+    #Afficher la base de données des clubs
+    output$view1 <- renderPrint({
+        data_base
+    })
+    #Afficher la base de données des joueurs
+    output$view2 <- renderPrint({
+        data_players
     })
 }
 # Run the application 
