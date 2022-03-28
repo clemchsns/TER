@@ -1,44 +1,54 @@
-##
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(DT)
-library(dashboard)
 library(shinydashboard)
 
 # ouverture de la base de donnees
-data_base <- read.csv("../Data/NBA_Season_Data.csv", stringsAsFactors=TRUE)
+data_base <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
 
 colnames(data_base) <- c("Annee", "Equipe", "Joueur", "Age", "NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "NbTirs", "JoueurID", "Supp", "Supp", "Supp", "Supp", "EfficaciteTirEquipe", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp", "Supp")
 data_base <- data_base[,c(1:17, 31:32, 37)]
 tapply(data_base$Age, data_base$Equipe, mean)
 
-data_players <-read.csv("../Data/players.csv", header=FALSE)
+data_players <- read.csv("../Data/players.csv", header=TRUE, stringsAsFactors=TRUE)
 colnames(data_players) = c("X_i","DateNaiss","LieuNaiss","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","Universite","Supp","Supp","Supp","Supp","Taille","Lycee","Nom","position","MainTire","Poids")
 data_players = data_players[,c(1:3,14,19:24)]
-
 # Define UI for application that draws a histogram
-ui <- fluidPage(  #faire la division en 2 parties
-    sidebarLayout(
-        sidebarPanel( #afficher la barre laterale ou se trouve les inputs
-            selectInput('var1','Choisissez une première variable :',choices=names(data_base)),
-        ),
-        mainPanel( #afficher le panneau principal ou on affiche les sorties
-            tabsetPanel( #diviser le tableau principal en onglets
-                tabPanel('Clubs',tableOutput('data_base')),#tableOutput("data_base")  : table de donnees
-                tabPanel('Clubs-Joueurs',tableOutput('clubjoueur_sortie')),
-                tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
-                tabPanel('Histogramme', plotOutput('hist')),
+ui <- dashboardPage(
+    dashboardHeader(title = "Menu"),
+    dashboardSidebar(
+        sidebarMenu(
+            menuItem("Iris", tabName = "iris", icon = icon("basketball-ball")),
+            menuItem("Cars", tabName = "cars", icon = icon("running"))
+        )
+    ),
+    dashboardBody(
+        tabItems(
+            tabItem("iris",
+                    fluidPage(
+                        h1("Iris")
+                    )
+            ),
+            tabItem("cars",
+                    fluidPage(  #faire la division en 2 parties
+                        sidebarLayout(
+                            sidebarPanel( #afficher la barre laterale ou se trouve les inputs
+                                selectInput('var1','Choisissez une première variable :',choices=names(data_base)),
+                            ),
+                            mainPanel( #afficher le panneau principal ou on affiche les sorties
+                                tabsetPanel( #diviser le tableau principal en onglets
+                                    tabPanel('Clubs',tableOutput('data_base')),#tableOutput("data_base")  : table de donnees
+                                    tabPanel('Clubs-Joueurs',tableOutput('clubjoueur_sortie')),
+                                    tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
+                                    tabPanel('Histogramme', plotOutput('hist')),
+                                )
+                            )
+                        )
+                    )
             )
         )
     )
 )
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
