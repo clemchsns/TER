@@ -14,6 +14,7 @@ levels(data_base$Equipe)=c("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Bu
 data_players <- read.csv("../Data/players.csv", header=TRUE, stringsAsFactors=TRUE)
 colnames(data_players) = c("X_i","DateNaiss","LieuNaiss","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","Universite","Supp","Supp","Supp","Supp","Taille","Lycee","Nom","position","MainTire","Poids")
 data_players = data_players[,c(1:3,14,19:24)]
+levels(data_players$Taille) <- c(1.78, 1.80, 1.60, 1.65, 1.68, 1.70, 1.73, 1.75, 1.83, 1.85, 2.08, 2.11, 1.88, 1.91, 1.93, 1.96, 1.98, 2.01, 2.03, 2.06, 2.13, 2.16, 2.18, 2.21, 2.24, 2.26, 2.29, 2.31)
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
