@@ -1,7 +1,7 @@
 library(shiny)
 library(DT)
 library(shinydashboard)
-
+# Vraie application TER 
 # ouverture de la base de donnees
 data_base <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
 
