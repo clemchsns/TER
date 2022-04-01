@@ -1,7 +1,7 @@
 library(shiny)
 library(DT)
 library(shinydashboard)
-# Vraie application TER 
+
 # ouverture de la base de donnees
 data_base <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
 
@@ -14,8 +14,6 @@ levels(data_base$Equipe)=c("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Bu
 data_players <- read.csv("../Data/players.csv", header=TRUE, stringsAsFactors=TRUE)
 colnames(data_players) = c("X_i","DateNaiss","LieuNaiss","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","Universite","Supp","Supp","Supp","Supp","Taille","Lycee","Nom","position","MainTire","Poids")
 data_players = data_players[,c(1:3,14,19:24)]
-levels(data_players$Taille) <- c(1.78, 1.80, 1.60, 1.65, 1.68, 1.70, 1.73, 1.75, 1.83, 1.85, 2.08, 2.11, 1.88, 1.91, 1.93, 1.96, 1.98, 2.01, 2.03, 2.06, 2.13, 2.16, 2.18, 2.21, 2.24, 2.26, 2.29, 2.31)
-
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
     dashboardHeader(title = "Menu"),
@@ -43,8 +41,8 @@ ui <- dashboardPage(
                             ),
                             mainPanel( #afficher le panneau principal ou on affiche les sorties
                                 tabsetPanel( #diviser le tableau principal en onglets
-                                    tabPanel('Clubs',tableOutput('data_base')),#tableOutput("data_base")  : table de donnees
-                                    tabPanel('Clubs-Joueurs',tableOutput('clubjoueur_sortie')),
+                                    tabPanel('Clubs', h1("Les différents clubs de la NBA"),verbatimTextOutput('noms_clubs')),
+                                    tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput('varcj')),
                                     tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
                                     tabPanel('Histogramme', plotOutput('hist')),
                                 )
@@ -53,19 +51,11 @@ ui <- dashboardPage(
                     )
             ),
             tabItem("Joueurs",
-                    fluidPage(
-                        h1("Caratéristiques des joueurs")
-                    )),
+                    fluidPage(h1("Caratéristiques des joueurs"))),
             tabItem("DonClubs",
-                    fluidPage(
-                        h1("Base de données des Clubs"),
-                        verbatimTextOutput('view1')
-                    )),
+                    fluidPage(h1("Base de données des Clubs"),verbatimTextOutput('view1'))),
             tabItem("DonJoueurs",
-                    fluidPage(
-                        h1("Base de données des joueurs"),
-                        verbatimTextOutput('view2')
-                    ))
+                    fluidPage(h1("Base de données des joueurs"),verbatimTextOutput('view2')))
         )
     )
 )
@@ -74,8 +64,8 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    output$data_base <- renderTable({ #a chaque type de sortie, il faut un render qui correspond dans le server
-        data_base 
+    output$noms_clubs <- renderText({ #a chaque type de sortie, il faut un render qui correspond dans le server
+        levels(data_base$Equipe)
     }) 
     
     #Résumé statistique
@@ -87,12 +77,20 @@ server <- function(input, output) {
         hist(data_base[,input$var1],main="Histogramme",xlab=input$var1)
     })
     #Afficher la base de données des clubs
-    output$view1 <- renderPrint({
-        data_base
-    })
+    #output$view1 <- renderPrint({
+    #    data_base
+    #})
     #Afficher la base de données des joueurs
-    output$view2 <- renderPrint({
-        data_players
+    #output$view2 <- renderPrint({
+    #data_players
+    #})
+    
+    output$textcj <- renderText({
+        paste("Voici les joueurs du club", input$varcj)
+    })
+    
+    output$varcj <- renderPrint({
+        data_base$Joueur[which(data_base$Equipe==input$varcj)]
     })
 }
 # Run the application 
