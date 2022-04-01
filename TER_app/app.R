@@ -34,24 +34,23 @@ ui <- dashboardPage(
                     )
             ),
             tabItem("Clubs",
-                    fluidPage(  #faire la division en 2 parties
-                        sidebarLayout(
-                            sidebarPanel( #afficher la barre laterale ou se trouve les inputs
-                                selectInput('var1','Choisissez une première variable :',choices=names(data_base)),
-                            ),
-                            mainPanel( #afficher le panneau principal ou on affiche les sorties
-                                tabsetPanel( #diviser le tableau principal en onglets
-                                    tabPanel('Clubs', h1("Les différents clubs de la NBA"),verbatimTextOutput('noms_clubs')),
-                                    tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput('varcj')),
-                                    tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
-                                    tabPanel('Histogramme', plotOutput('hist')),
-                                )
-                            )
-                        )
+                    tabsetPanel( #diviser le tableau principal en onglets
+                        tabPanel('Clubs', h1("Les différents clubs de la NBA"),verbatimTextOutput('noms_clubs')),
+                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput('varcj'),
+                                 box(("Voici la liste des clubs<br />"))),
+                        tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
+                        tabPanel('Histogramme', plotOutput('hist')),
+                        tabPanel('Carte des clubs')
                     )
             ),
             tabItem("Joueurs",
-                    fluidPage(h1("Caratéristiques des joueurs"))),
+                    fluidPage(h1("Caratéristiques des joueurs"),
+                              tabsetPanel(
+                                  tabPanel('Carte des lieux de naissance'),
+                                  tabPanel('Caractéristiques générales'),
+                                  tabPanel('Caractéristiques d\'un joueur'),
+                                  tabPanel('Position du joueur')
+                              ))),
             tabItem("DonClubs",
                     fluidPage(h1("Base de données des Clubs"),verbatimTextOutput('view1'))),
             tabItem("DonJoueurs",
