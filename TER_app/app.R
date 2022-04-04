@@ -45,10 +45,10 @@ ui <- dashboardPage(
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
-                        tabPanel('Clubs', h1("Les différents clubs de la NBA"),verbatimTextOutput('noms_clubs')),
-                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput('varcj'),
-                                 box(("Voici la liste des clubs<br />"))),
-                        tabPanel('Statistiques',verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
+                        tabPanel('Clubs', h1("Les différents clubs de la NBA"),HTML("<p style=\"font-size:x-large\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),textOutput('noms_clubs',inline = FALSE)),
+                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput("varcj")
+                        ),
+                        tabPanel('Statistiques',HTML("<p style=\"font-size:x-large\">Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
                         tabPanel('Histogramme', plotOutput('hist')),
                         tabPanel('Carte des clubs')
                     )
@@ -58,7 +58,12 @@ ui <- dashboardPage(
                               tabsetPanel(
                                   tabPanel('Carte des lieux de naissance'),
                                   tabPanel('Caractéristiques générales'),
-                                  tabPanel('Caractéristiques d\'un joueur'),
+                                  tabPanel('Caractéristiques d\'un joueur', 
+                                           selectizeInput('joueurs_id', 'Joueurs', choices = joueurs_names,
+                                                          options = list(
+                                                              placeholder = 'Ecrivez pour chercher un joueur',
+                                                              onInitialize = I('function() { this.setValue(""); }')
+                                                          )), verbatimTextOutput("j"), verbatimTextOutput("E"),verbatimTextOutput("Tirs"),verbatimTextOutput("NbTirs")),
                                   tabPanel('Position du joueur')
                               ))),
             tabItem("DonClubs",
@@ -85,6 +90,28 @@ server <- function(input, output) {
     output$hist <- renderPlot({
         hist(data_base[,input$var1],main="Histogramme",xlab=input$var1)
     })
+    
+    #Afficher les caractéristiques des joueurs
+    output$j <- renderText({
+        paste("Joueur :", input$joueurs_id)
+    })
+    
+    output$E <- renderText({
+        paste("Equipe dans lesquelles le joueur a été")
+        paste(unique(data_base$Equipe[data_base$Nom==input$joueurs_id]),sep="-")
+    })
+    
+    output$Tirs <- renderPrint({
+        data_base$EfficaciteTir[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
+    })
+    output$NbTirs <- renderPrint({
+        data_base$NbTirs[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
+    })
+    
+    #
+    #data_base$NbMatchs[data_base$Joueur==input$varcj & data_base$Annee==2015,]
+    #data_base$MinutesJouees[data_base$Joueur==input$varcj & data_base$Annee==2015,]
+    
     #Afficher la base de données des clubs
     #output$view1 <- renderPrint({
     #    data_base
@@ -95,11 +122,11 @@ server <- function(input, output) {
     #})
     
     output$textcj <- renderText({
-        paste("Voici les joueurs du club", input$varcj)
+        paste("Voici les joueurs ayant été dans le club", input$varcj,"entre 1978 et 2015")
     })
     
     output$varcj <- renderPrint({
-        data_base$Joueur[which(data_base$Equipe==input$varcj)]
+        data_base$Nom[which(data_base$Equipe==input$varcj)]
     })
 }
 # Run the application 
