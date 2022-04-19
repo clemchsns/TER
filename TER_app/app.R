@@ -22,7 +22,7 @@ joueurs_names = data_base$Nom
 
 # Trouver les correspondances entre data et data_players 
 table(data_equipe$Nom %in% data_players$Nom)
-data_base <- semi_join(data_equipe,data_players,by="Nom")
+data_base <- merge(data_equipe,data_players,by='Nom')
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
