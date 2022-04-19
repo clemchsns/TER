@@ -31,7 +31,8 @@ ui <- dashboardPage(
         sidebarMenu(
             menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball")),
             menuItem("Clubs", tabName = "Clubs", icon = icon("hands-helping")),
-            menuItem("Joueurs", tabName = "Joueurs", icon = icon("running"))
+            menuItem("Joueurs", tabName = "Joueurs", icon = icon("running")),
+            menuItem("Restrospective du projet", tabName = "Retro")
     )),
     dashboardBody(
         tabItems(
@@ -64,7 +65,7 @@ ui <- dashboardPage(
                                                           )), verbatimTextOutput("j"), dataTableOutput("cara")),
                                   tabPanel('Position du joueur')
                               ))),
-            tabItem("Rétrospective du projet",
+            tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
                         HTML('Conclusion de notre TER')))
         )
