@@ -32,7 +32,7 @@ ui <- dashboardPage(
             menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball")),
             menuItem("Clubs", tabName = "Clubs", icon = icon("hands-helping")),
             menuItem("Joueurs", tabName = "Joueurs", icon = icon("running")),
-            menuItem("Restrospective du projet", tabName = "Retro")
+            menuItem("Restrospective du projet", tabName = "Retro", icon = icon("tasks"))
     )),
     dashboardBody(
         tabItems(
