@@ -30,8 +30,8 @@ ui <- dashboardPage(
     dashboardSidebar(
         sidebarMenu(
             menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball")),
-            menuItem("Clubs", tabName = "Clubs", icon = icon("running")),
-            menuItem("Joueurs", tabName = "Joueurs", icon = icon("arrow-right"))
+            menuItem("Clubs", tabName = "Clubs", icon = icon("hands-helping")),
+            menuItem("Joueurs", tabName = "Joueurs", icon = icon("running"))
     )),
     dashboardBody(
         tabItems(
