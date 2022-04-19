@@ -63,7 +63,10 @@ ui <- dashboardPage(
                                                               onInitialize = I('function() { this.setValue(""); }')
                                                           )), verbatimTextOutput("j"), dataTableOutput("cara")),
                                   tabPanel('Position du joueur')
-                              )))
+                              ))),
+            tabItem("Rétrospective du projet",
+                    fluidPage(h1("Rétrospective"),
+                        HTML('Conclusion de notre TER')))
         )
     )
 )
@@ -125,4 +128,3 @@ server <- function(input, output) {
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
-
