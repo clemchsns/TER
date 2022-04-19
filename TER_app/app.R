@@ -62,8 +62,7 @@ ui <- dashboardPage(
                                                           options = list(
                                                               placeholder = 'Ecrivez pour chercher un joueur',
                                                               onInitialize = I('function() { this.setValue(""); }')
-                                                          )), verbatimTextOutput("j"), dataTableOutput("cara")),
-                                  tabPanel('Position du joueur')
+                                                          )), verbatimTextOutput("j"), dataTableOutput("cara"))
                               ))),
             tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
