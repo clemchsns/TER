@@ -20,6 +20,8 @@ data_players = data_players[,c(2:3,14,17:24)]
 View(data_players)
 nrow(data_players)
 
+joueurs_names = data_base$Nom
+
 # Trouver les correspondances entre data et data_players 
 table(data_equipe$Nom %in% data_players$Nom)
 data_base <- semi_join(data_equipe,data_players,by="Nom")
@@ -47,9 +49,9 @@ ui <- dashboardPage(
                     tabsetPanel( #diviser le tableau principal en onglets
                         tabPanel('Clubs', h1("Les différents clubs de la NBA"),
                                  HTML("<p style=\"font-size:x-large\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
-                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),verbatimTextOutput("varcj")
+                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),dataTableOutput("varcj")
                         ),
-                        tabPanel('Statistiques',HTML("<p style=\"font-size:x-large\">Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
+                        tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
                         tabPanel('Histogramme', plotOutput('hist')),
                         tabPanel('Carte des clubs')
                     )
@@ -64,7 +66,7 @@ ui <- dashboardPage(
                                                           options = list(
                                                               placeholder = 'Ecrivez pour chercher un joueur',
                                                               onInitialize = I('function() { this.setValue(""); }')
-                                                          )), verbatimTextOutput("j"), verbatimTextOutput("E"),verbatimTextOutput("Tirs"),verbatimTextOutput("NbTirs")),
+                                                          )), verbatimTextOutput("j"), dataTableOutput("cara")),
                                   tabPanel('Position du joueur')
                               ))),
             tabItem("DonClubs",
@@ -79,10 +81,11 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-#    output$noms_clubs <- renderText({ #a chaque type de sortie, il faut un render qui correspond dans le server
-#        levels(data_base$Equipe)
-#    }) 
-    output$noms_clubs <- renderDataTable(data_base[,1:2])   
+    #    output$noms_clubs <- renderText({ #a chaque type de sortie, il faut un render qui correspond dans le server
+    #        levels(data_base$Equipe)
+    #    }) 
+    output$noms_clubs <- renderDataTable(unique(data_base[,1:2]))   
+    
     #Résumé statistique
     output$summary <- renderPrint({
         summary(data_base)
@@ -97,17 +100,19 @@ server <- function(input, output) {
         paste("Joueur :", input$joueurs_id)
     })
     
-    output$E <- renderText({
-        paste("Equipe dans lesquelles le joueur a été")
-        paste(unique(data_base$Equipe[data_base$Nom==input$joueurs_id]),sep="-")
-    })
+    output$cara <- renderDataTable(data_base[which(data_base$Nom==input$joueurs_id),][,c(1:2,4:18,20)])
     
-    output$Tirs <- renderPrint({
-        data_base$EfficaciteTir[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
-    })
-    output$NbTirs <- renderPrint({
-        data_base$NbTirs[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
-    })
+    #output$E <- renderText({
+    #    paste("Equipe dans lesquelles le joueur a été")
+    #    paste(unique(data_base$Equipe[data_base$Nom==input$joueurs_id]),sep="-")
+    #})
+    
+    #output$Tirs <- renderPrint({
+    #    data_base$EfficaciteTir[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
+    #})
+    #output$NbTirs <- renderPrint({
+    #    data_base$NbTirs[data_base$Nom==input$joueurs_id & data_base$Annee==2015]
+    #})
     
     #
     #data_base$NbMatchs[data_base$Joueur==input$varcj & data_base$Annee==2015,]
@@ -126,9 +131,7 @@ server <- function(input, output) {
         paste("Voici les joueurs ayant été dans le club", input$varcj,"entre 1978 et 2015")
     })
     
-    output$varcj <- renderPrint({
-        data_base$Nom[which(data_base$Equipe==input$varcj)]
-    })
+    output$varcj <- renderDataTable(data_base[which(data_base$Equipe==input$varcj),][,c(1,3)])
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
