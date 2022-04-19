@@ -63,7 +63,7 @@ ui <- dashboardPage(
                                                               onInitialize = I('function() { this.setValue(""); }')
                                                           )), verbatimTextOutput("j"), dataTableOutput("cara")),
                                   tabPanel('Position du joueur')
-                              ))),
+                              )))
         )
     )
 )
