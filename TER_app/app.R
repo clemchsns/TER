@@ -3,6 +3,7 @@ library(DT)
 library(shinydashboard)
 library(dplyr)
 library(ggplot2)
+library(leaflet)
 
 # ouverture de la base de donnees
 data_equipe <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
@@ -23,6 +24,22 @@ joueurs_names = data_base$Nom
 # Trouver les correspondances entre data et data_players 
 table(data_equipe$Nom %in% data_players$Nom)
 data_base <- semi_join(data_equipe,data_players,by='Nom')
+
+#Création data frame pour les cartes
+
+
+nom_equipe <- c("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets") 
+
+
+data_map <- data.frame(Nom_equipe = nom_equipe) 
+data_map
+
+data_map$Lat=c(33.75693,42.37128,40.68631,42.88760,35.22480,41.90392,41.88134,41.93095,41.49649,43.64387,39.74935,42.34124,37.76817,29.75085,39.76417,38.58029,34.04314,34.04314,35.13821,25.78156,43.04518,44.98418,40.688310,25.715889,40.769163,29.949602,29.949602,40.751133,35.464039,28.539707,39.901832,33.446499,45.532140,38.580932,29.427794,34.044002 ,47.622624, 43.64360,40.76858,49.28841, 38.89831,38.89831 ) 
+data_map$Lat = as.numeric(as.character(data_map$Lat))
+
+data_map$Long=c(-84.39215,-71.05998,-73.94432,-78.87063,-80.83986,-87.62480,-87.67376,-87.99805,-81.68848,-79.37841,-105.00773,-83.05530,-122.38767,-95.36206,-86.15543,-121.49972,-118.26726,-118.26726,-90.05059,-80.18697,-87.91738,-93.27690,-73.97541,-80.279204,-111.900518,-90.082026,-90.081925,-73.993272,-97.514831,-81.383502,-75.171531,-112.070782,-122.666472,-121.499249,-98.437227,-118.266694,-122.353855,-79.37909,-111.90107,-123.10644, -77.02083, -77.02083)
+data_map$Long = as.numeric(as.character(data_map$Long))
+
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
@@ -49,7 +66,8 @@ ui <- dashboardPage(
                         ),
                         tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
                         tabPanel('Graphiques',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub')),
-                        tabPanel('Carte des clubs')
+                        tabPanel('Carte des clubs', h3("Points sur  carte"),
+                                 leafletOutput("map_points"))
                     )
             ),
             tabItem("Joueurs",
@@ -109,6 +127,16 @@ server <- function(input, output) {
         #        plot(EfficaciteTirEquipe ~ Annee, data = data_base1)
         ggplot(data_base1)+aes(x=Annee,y=EfficaciteTirEquipe)+
             geom_point()+geom_smooth()+theme_bw()
+        
+    })
+    
+    #Carte 
+    output$map_points <- renderLeaflet({
+        
+        leaflet(data=data_map) %>%
+            addTiles() %>%
+            addMarkers(lng = ~Long, lat = ~Lat, popup = as.character(~Nom_equipe))
+        
     })
     
     #Camembert
@@ -128,3 +156,4 @@ server <- function(input, output) {
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
+
