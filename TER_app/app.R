@@ -17,6 +17,7 @@ data_players <- read.csv("../Data/players.csv", header=TRUE, stringsAsFactors=TR
 summary(data_players)
 colnames(data_players) = c("supp","DateNaiss","LieuNaiss","Supp","Supp","supp","Supp","Supp","Supp","Supp","Supp","Supp","Supp","Universite","Supp","Supp","Equipe","Ann?ePro","Taille","Lycee","Nom","position","MainTire","Poids")
 data_players = data_players[,c(2:3,14,17:24)]
+levels(data_players$Taille) <- c(1.78, 1.80, 1.60, 1.65, 1.68, 1.70, 1.73, 1.75, 1.83, 1.85, 2.08, 2.11, 1.88, 1.91, 1.93, 1.96, 1.98, 2.01, 2.03, 2.06, 2.13, 2.16, 2.18, 2.21, 2.24, 2.26, 2.29, 2.31)
 
 #création dataframe pour pouvoir sélectionner les joueurs
 joueurs_names = data_base$Nom
@@ -74,7 +75,7 @@ ui <- dashboardPage(
                     fluidPage(h1("Caratéristiques des joueurs"),
                               tabsetPanel(
                                   tabPanel('Carte des lieux de naissance'),
-                                  tabPanel('Caractéristiques générales', plotOutput('varpie')),
+                                  tabPanel('Caractéristiques générales', plotOutput('varpie'), plotOutput('varhisto')),
                                   tabPanel('Caractéristiques d\'un joueur', 
                                            selectizeInput('joueurs_id', 'Joueurs', choices = joueurs_names,
                                                           options = list(
@@ -152,6 +153,19 @@ server <- function(input, output) {
                           label=paste(group,"\n",round((value/sum(value))*100), "%")))+
             theme_minimal()
         pie
+    })
+    
+    #Histogramme
+    output$varhisto <- renderPlot({
+        histo <- ggplot(data_players, aes(x = as.numeric(as.character(data_players$Taille)))) +
+            geom_histogram(color="black", fill="white") +
+            xlab ("Taille des joueurs") +
+            ylab("Nombre de joueurs") +
+            geom_vline(aes(xintercept=mean(as.numeric(as.character(data_players$Taille)))),
+                       color="blue", linetype="dashed", size=1) +
+            geom_vline(aes(xintercept=1.754),
+                       color="red", linetype="dashed", size=1)
+        histo
     })
 }
 # Run the application 
