@@ -123,8 +123,7 @@ server <- function(input, output) {
         paste("Vous avez séléctionné le joueur", input$joueurs_id, "pour l'année",input$annee)
     })
     
-    output$cara <- renderDataTable(data_base[which(data_base$Nom==input$joueurs_id & data_base$Annee==input$annee),][,c(1:2,4:18,20)],rownames=FALSE)
-    
+    output$cara <- renderDataTable({DT::datatable(data=data_base[which(data_base$Nom==input$joueurs_id & data_base$Annee==input$annee),][,c(1:2,4:18,20)],option= list(scrollX=TRUE),rownames=FALSE)})
     #Nuage de points
     output$varclub <- renderPlot({
         data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
