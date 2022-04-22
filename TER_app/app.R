@@ -4,6 +4,8 @@ library(shinydashboard)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
+library(DT)
+library(shinyWidgets)
 
 # ouverture de la base de donnees
 data_equipe <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
@@ -41,7 +43,7 @@ data_map$Lat = as.numeric(as.character(data_map$Lat))
 data_map$Long=c(-84.39215,-71.05998,-73.94432,-78.87063,-80.83986,-87.62480,-87.67376,-87.99805,-81.68848,-79.37841,-105.00773,-83.05530,-122.38767,-95.36206,-86.15543,-121.49972,-118.26726,-118.26726,-90.05059,-80.18697,-87.91738,-93.27690,-73.97541,-80.279204,-111.900518,-90.082026,-90.081925,-73.993272,-97.514831,-81.383502,-75.171531,-112.070782,-122.666472,-121.499249,-98.437227,-118.266694,-122.353855,-79.37909,-111.90107,-123.10644, -77.02083, -77.02083)
 data_map$Long = as.numeric(as.character(data_map$Long))
 
-#pour séléctionner les années
+#pour sélectionner les années
 annees = data_base$Annee
 
 # Define UI for application that draws a histogram
@@ -71,7 +73,7 @@ ui <- dashboardPage(
                                      
                                     <p>En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.</p>')),
                                   tabPanel("Présentation de la NBA",imageOutput("logo")),
-                                  tabPanel("Meilleurs Dunks de 2016",uiOutput("tab"))
+                                  tabPanel("Meilleurs Dunks de 2016",tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
                         )
             )),
             tabItem("Clubs",
@@ -117,13 +119,11 @@ ui <- dashboardPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    #affichage du logo et des vidéos 
-    #output$logo <- renderImage({src="../Data/logo_NBA.jpg"})
-
-    url_dunk <- a("Best Dunks in 2016",href="https://www.youtube.com/embed/wpizP7Vehnw")
-    output$tab <- renderUI({
-        tagList("URL link",url_dunk)
-    })
+    #affichage du logo 
+    output$logo <- renderImage({
+        list(src="../Data/logo_NBA.png",alt="logo NBA",width=150,height=250,vspace=25,style='position : relative')
+        },deleteFile=FALSE)
+    
     #Sorti de l'onglet club
     output$noms_clubs <- renderDataTable(unique(data_base[,1:2]),rownames=FALSE)   
     output$textcj <- renderText({
