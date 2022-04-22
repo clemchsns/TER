@@ -57,8 +57,10 @@ ui <- dashboardPage(
     dashboardBody(
         tabItems(
             tabItem("Accueil",
-                    fluidPage(
-                        h1("Accueil")
+                    fluidPage(h1("Accueil"),
+                              tabsetPanel(
+                                  tabPanel("Logo NBA",tags$img(src="../Data/logo_NBA.jpg"))
+                              )
                     )
             ),
             tabItem("Clubs",
