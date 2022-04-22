@@ -55,14 +55,25 @@ ui <- dashboardPage(
             menuItem("Restrospective du projet", tabName = "Retro", icon = icon("tasks"))
     )),
     dashboardBody(
+        headerPanel('image de fond'),
         tabItems(
             tabItem("Accueil",
                     fluidPage(h1("Accueil"),
                               tabsetPanel(
-                                  tabPanel("Logo NBA",tags$img(src="../Data/logo_NBA.jpg"))
-                              )
-                    )
-            ),
+                                  tabPanel("Présentation de notre TER",HTML('<p>Lors du second semestre de notre licence 3 en Mathématiques et Informatique Appliquées Aux Sciences Humaines et Sociales, nous avons pu choisir un sujet de travail encadré par un de nos enseignants. Pour notre part, Clémence, Margaux, Marie et Oriane, nous avons choisi de réaliser une application WEB à l’aide du logiciel R Shiny. Effectivement, notre attrait pour l’informatique nous a poussé à choisir ce sujet.  Aussi, nous sommes toutes passionnées de sport, il nous a donc paru important d’introduire cette thématique dans notre projet. Nous avons choisi d’analyser une compétition connue dans le monde entier : la NBA. Grâce aux nombreuses bases de données trouvées au sujet de la National Basketball Association, nous avons pu nous intéresser aux statistiques des clubs et des joueurs présents au sein de cette compétition entre 1978 et 2015.</p>
+
+                                    	<p>Tout d’abord, afin de pouvoir réaliser notre application, nous avons recherché une base de données intéressante à étudier. Il semblait évident que le thème qui nous allions aborder serait le sport ou la santé puisque nous sommes passionnées de ces sujets. Au départ, nous avons voulu analyser l’impact des drogues sur la santé mais ne disposant pas de base de données adéquates, nous nous sommes focalisées définitivement sur la thématique du sport. Nous avons d’abord voulu étudier un sport au niveau local, et plus particulièrement le Stade Rennais, mais le travail était trop compliqué pour pouvoir récupérer sous un format correct notre base de données. Ainsi, nous avons décidé d’opter pour une compétition internationale de basketball : la NBA. La recherche des données à analyser s’est donc avéré plus longue et compliquée que ce que nous avions prévu. Au final, nous avons sélectionné deux bases de données : la première au sujet des clubs et la seconde à propos des différents joueurs de basketball présents lors d’une ou plusieurs saisons de NBA.
+                                    Ensuite, notre travail de compréhension du logiciel R Shiny a pu réellement débuter. Notre objectif initial était de créer une application avec des extraits de vidéos sur le basket et des pages interactives. Nous souhaitions reprendre un modèle d’application déjà existant et l’adapter à nos propres données. Cependant, cette tâche s’est révélée très complexe puisque le code R comportait de l’HTML, du CSS mais aussi des liens pour accéder à des vidéos provenant d’internet. N’ayant pas encore intégré toutes les particularités du fonctionnement du logiciel, à ce moment donné, notre niveau de compréhension de R Shiny était insuffisant pour mettre ce code en place. Nous avons donc décidé de reprendre les bases, en réalisant de petites applications simples, en regardant des vidéos et tutoriels afin de comprendre le fonctionnement de ce logiciel, pour ensuite complexifier le code. C’est ainsi que nous avons commencer à réaliser notre application. Nous avions pour but de réaliser des statistiques sur les clubs de basketball mais aussi sur les joueurs eux-mêmes. 
+                                    <p>Premièrement, nous avons créé la structure de l’application avec deux onglets : le premier concernant les clubs et le deuxième, les joueurs.</p>
+                                    Dans l’onglet des clubs, il nous paraissait primordial d’afficher les clubs présents lors de cette compétition. Nous avons donc réalisé un datatable pour présenter ces variables. Puis, dans le sous-onglet suivant, nous voulions que l’utilisateur puisse sélectionner un club et une année pour pouvoir accès aux différents joueurs jouant dans le club choisi. La présentation sous forme de datatable avec des barres de recherches nous a semblé la plus esthétique et adaptée. Ensuite, le résumé statistique nous permet de comprendre les données et les graphiques de mieux les visualiser. La prise en main du package ggplot a aussi été un challenge puisque nous étions en autonomie. Enfin, la création d’une carte localisant les différents clubs nous a permis d’avoir une application un peu plus ludique pour l’utilisateur. 
+                                    Par ailleurs, l’onglet joueurs est un peu moins exhaustif puisque nous avons effectué des statistiques sur les caractéristiques générales. Par exemple, nous avons réalisé des graphiques au sujet de la main de tir mais aussi de la taille des joueurs. Dans un autre sous-onglet, nous avons affiché les informations personnelles de chaque joueur grâce à une barre de recherche.
+                                    Deuxièmement, après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.</p> 
+                                     
+                                    <p>En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.</p>')),
+                                  tabPanel("Présentation de la NBA",imageOutput("logo")),
+                                  tabPanel("Meilleurs Dunks de 2016",uiOutput("tab"))
+                        )
+            )),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
                         tabPanel('Clubs', h1("Les différents clubs de la NBA"),
@@ -103,8 +114,16 @@ ui <- dashboardPage(
 )
 
 
+
 # Define server logic required to draw a histogram
 server <- function(input, output) {
+    #affichage du logo et des vidéos 
+    #output$logo <- renderImage({src="../Data/logo_NBA.jpg"})
+
+    url_dunk <- a("Best Dunks in 2016",href="https://www.youtube.com/embed/wpizP7Vehnw")
+    output$tab <- renderUI({
+        tagList("URL link",url_dunk)
+    })
     #Sorti de l'onglet club
     output$noms_clubs <- renderDataTable(unique(data_base[,1:2]),rownames=FALSE)   
     output$textcj <- renderText({
