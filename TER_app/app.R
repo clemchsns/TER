@@ -41,6 +41,8 @@ data_map$Lat = as.numeric(as.character(data_map$Lat))
 data_map$Long=c(-84.39215,-71.05998,-73.94432,-78.87063,-80.83986,-87.62480,-87.67376,-87.99805,-81.68848,-79.37841,-105.00773,-83.05530,-122.38767,-95.36206,-86.15543,-121.49972,-118.26726,-118.26726,-90.05059,-80.18697,-87.91738,-93.27690,-73.97541,-80.279204,-111.900518,-90.082026,-90.081925,-73.993272,-97.514831,-81.383502,-75.171531,-112.070782,-122.666472,-121.499249,-98.437227,-118.266694,-122.353855,-79.37909,-111.90107,-123.10644, -77.02083, -77.02083)
 data_map$Long = as.numeric(as.character(data_map$Long))
 
+#pour séléctionner les années
+annees = data_base$Annee
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
@@ -63,9 +65,13 @@ ui <- dashboardPage(
                     tabsetPanel( #diviser le tableau principal en onglets
                         tabPanel('Clubs', h1("Les différents clubs de la NBA"),
                                  HTML("<p style=\"font-size:x-large\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
-                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),verbatimTextOutput("textcj"),dataTableOutput("varcj")
+                        tabPanel('Clubs-Joueurs',selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")),selectizeInput('annee_club', 'Années', choices = annees,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           options = list(
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               placeholder = 'Ecrivez pour chercher une année',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               onInitialize = I('function() { this.setValue(""); }')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           )),verbatimTextOutput("textcj"),dataTableOutput("varcj")
                         ),
-                        tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),verbatimTextOutput('summary')),#verbatimTextOutput : permet d'afficher le résumé stat
+                        tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),dataTableOutput('summary')),
                         tabPanel('Graphiques',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub')),
                         tabPanel('Carte des clubs', h3("Points sur  carte"),
                                  leafletOutput("map_points"))
@@ -81,7 +87,11 @@ ui <- dashboardPage(
                                                           options = list(
                                                               placeholder = 'Ecrivez pour chercher un joueur',
                                                               onInitialize = I('function() { this.setValue(""); }')
-                                                          )), verbatimTextOutput("j"), dataTableOutput("cara"))
+                                                          )),selectizeInput('annee', 'Années', choices = annees,
+                                                                            options = list(
+                                                                                placeholder = 'Ecrivez pour chercher une année',
+                                                                                onInitialize = I('function() { this.setValue(""); }'), selected = "1978"
+                                                                            )), verbatimTextOutput("j"), dataTableOutput("cara"))
                               ))),
             tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
@@ -93,16 +103,16 @@ ui <- dashboardPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    
-    #    output$noms_clubs <- renderText({ #a chaque type de sortie, il faut un render qui correspond dans le server
-    #        levels(data_base$Equipe)
-    #    }) 
-    output$noms_clubs <- renderDataTable(unique(data_base[,1:2]))   
+    #Sorti de l'onglet club
+    output$noms_clubs <- renderDataTable(unique(data_base[,1:2]),rownames=FALSE)   
+    output$textcj <- renderText({
+        paste("Voici les joueurs ayant été dans le club", input$varcj,"pour l'année",input$annee_club)
+    })
+    output$varcj <- renderDataTable(data_base[which(data_base$Equipe==input$varcj & data_base$Annee==input$annee_club),][,c(1,3)],rownames=FALSE)
     
     #Résumé statistique
-    output$summary <- renderPrint({
-        summary(data_base)
-    })
+    output$summary <- renderDataTable(summary(data_base),rownames=FALSE)
+    
     #Histogramme (output$id_sortie de plotOutput)
     output$hist <- renderPlot({
         hist(data_base[,input$var1],main="Histogramme",xlab=input$var1)
@@ -110,16 +120,10 @@ server <- function(input, output) {
     
     #Afficher les caractéristiques des joueurs
     output$j <- renderText({
-        paste("Joueur :", input$joueurs_id)
+        paste("Vous avez séléctionné le joueur", input$joueurs_id, "pour l'année",input$annee)
     })
     
-    output$cara <- renderDataTable(data_base[which(data_base$Nom==input$joueurs_id),][,c(1:2,4:18,20)])
-    
-    output$textcj <- renderText({
-        paste("Voici les joueurs ayant été dans le club", input$varcj,"entre 1978 et 2015")
-    })
-    
-    output$varcj <- renderDataTable(data_base[which(data_base$Equipe==input$varcj),][,c(1,3)])
+    output$cara <- renderDataTable(data_base[which(data_base$Nom==input$joueurs_id & data_base$Annee==input$annee),][,c(1:2,4:18,20)],rownames=FALSE)
     
     #Nuage de points
     output$varclub <- renderPlot({
