@@ -48,10 +48,12 @@ annees = data_base$Annee
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
-    dashboardHeader(title = "Menu"),
+    dashboardHeader(title = "NBA Menu"),
     dashboardSidebar(
         sidebarMenu(
-            menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball")),
+            menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball"),
+                     menuSubItem("Présentation de notre TER",tabName="TER"),
+                     menuSubItem("Meilleurs Dunks de 2016",tabName="dunks")),
             menuItem("Clubs", tabName = "Clubs", icon = icon("hands-helping")),
             menuItem("Joueurs", tabName = "Joueurs", icon = icon("running")),
             menuItem("Restrospective du projet", tabName = "Retro", icon = icon("tasks"))
@@ -59,8 +61,8 @@ ui <- dashboardPage(
     dashboardBody(
         headerPanel('image de fond'),
         tabItems(
-            tabItem("Accueil",
-                    fluidPage(h1("Accueil"),
+            tabItem(tabName="TER",
+                    fluidPage(h1("Présentation de notre TER"),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",HTML('<p>Lors du second semestre de notre licence 3 en Mathématiques et Informatique Appliquées Aux Sciences Humaines et Sociales, nous avons pu choisir un sujet de travail encadré par un de nos enseignants. Pour notre part, Clémence, Margaux, Marie et Oriane, nous avons choisi de réaliser une application WEB à l’aide du logiciel R Shiny. Effectivement, notre attrait pour l’informatique nous a poussé à choisir ce sujet.  Aussi, nous sommes toutes passionnées de sport, il nous a donc paru important d’introduire cette thématique dans notre projet. Nous avons choisi d’analyser une compétition connue dans le monde entier : la NBA. Grâce aux nombreuses bases de données trouvées au sujet de la National Basketball Association, nous avons pu nous intéresser aux statistiques des clubs et des joueurs présents au sein de cette compétition entre 1978 et 2015.</p>
 
@@ -73,9 +75,10 @@ ui <- dashboardPage(
                                      
                                     <p>En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.</p>')),
                                   tabPanel("Présentation de la NBA",imageOutput("logo")),
-                                  tabPanel("Meilleurs Dunks de 2016",tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
-                        )
-            )),
+                                  ))),
+            tabItem(tabName="dunks", 
+                    fluidPage(h1("Meilleurs Dunks de 2016"),tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
+            ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
                         tabPanel('Clubs', h1("Les différents clubs de la NBA"),
@@ -108,13 +111,14 @@ ui <- dashboardPage(
                                                                                 onInitialize = I('function() { this.setValue(""); }'), selected = "1978"
                                                                             )), verbatimTextOutput("j"), dataTableOutput("cara"))
                               ))),
+            
             tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
                         HTML('Conclusion de notre TER')))
         )
     )
-)
 
+)
 
 
 # Define server logic required to draw a histogram
