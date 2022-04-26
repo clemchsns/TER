@@ -55,7 +55,8 @@ content <- paste(sep = "<br/>",
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
-    dashboardHeader(title = "NBA Menu"),
+    dashboardHeader(title = "NBA Menu",
+                    dropdownMenu(type="message", messageItem(from="Notification",message="Bienvenue sur notre application WEB au sujet de la NBA ! Bonne visite !",icon=icon("envelope-open")))),
     dashboardSidebar(
         sidebarMenu(
             menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball"),
