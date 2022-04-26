@@ -46,6 +46,13 @@ data_map$Long = as.numeric(as.character(data_map$Long))
 #pour sélectionner les années
 annees = data_base$Annee
 
+#Definir le contenu pour siege sociale 
+content <- paste(sep = "<br/>",
+                 "<b><a href='https://www.beinsports.com/france/nba/'>Site officiel NBA</a></b>",
+                 "l'Olympic Tower au 645, de la 5 Avenue à New York" 
+)
+
+
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
     dashboardHeader(title = "NBA Menu"),
@@ -74,7 +81,7 @@ ui <- dashboardPage(
                                     Deuxièmement, après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.</p> 
                                      
                                     <p>En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.</p>')),
-                                  tabPanel("Présentation de la NBA",imageOutput("logo")),
+                                  tabPanel("Présentation de la NBA",imageOutput("logo"), leafletOutput("map_nba")),
                                   ))),
             tabItem(tabName="dunks", 
                     fluidPage(h1("Meilleurs Dunks de 2016"),tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
@@ -164,13 +171,20 @@ server <- function(input, output) {
         
     })
     
-    #Carte 
+    #Carte des clubs 
     output$map_points <- renderLeaflet({
         
         leaflet(data=data_map) %>%
             addTiles() %>%
-            addMarkers(lng = ~Long, lat = ~Lat, popup = as.character(~Nom_equipe))
+            addMarkers(lng = ~Long, lat = ~Lat,  popup = ~ paste("Nom equipe:",'<b>',nom_equipe, '</b>'))
         
+    })
+    #Carte du siege sociale
+    output$map_nba <- renderLeaflet({
+        leaflet() %>% addTiles() %>%
+            addPopups(-73.97369, 40.75961, content,
+                      options = popupOptions(closeButton = FALSE)
+            )
     })
     
     #Camembert
