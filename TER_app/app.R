@@ -98,7 +98,6 @@ ui <- dashboardPage(
             tabItem("Joueurs",
                     fluidPage(h1("Caratéristiques des joueurs"),
                               tabsetPanel(
-                                  tabPanel('Carte des lieux de naissance'),
                                   tabPanel('Caractéristiques générales', 
                                            fluidRow(
                                                box(title = "Diagramme concernant la manualité des joueurs", plotOutput('varpie')), 
