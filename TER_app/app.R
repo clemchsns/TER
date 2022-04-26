@@ -70,7 +70,7 @@ ui <- dashboardPage(
         headerPanel('image de fond'),
         tabItems(
             tabItem(tabName="TER",
-                    fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "https://st2.depositphotos.com/3334457/7082/i/600/depositphotos_70826925-stock-photo-red-basketball-player-in-action.jpg", shinydashboard = TRUE),
+                    fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "http://www.wallfizz.com/sport/basketball/871-basketball-WallFizz.jpg", shinydashboard = TRUE),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            box(title='Choix du sujet',status = "danger",solidHeader = TRUE, p('Lors du second semestre de notre licence 3 en Mathématiques et Informatique Appliquées Aux Sciences Humaines et Sociales, nous avons pu choisir un sujet de travail encadré par un de nos enseignants. Pour notre part, Clémence, Margaux, Marie et Oriane, nous avons choisi de réaliser une application WEB à l’aide du logiciel R Shiny. Effectivement, notre attrait pour l’informatique nous a poussé à choisir ce sujet.  Aussi, nous sommes toutes passionnées de sport, il nous a donc paru important d’introduire cette thématique dans notre projet. Nous avons choisi d’analyser une compétition connue dans le monde entier : la NBA. Grâce aux nombreuses bases de données trouvées au sujet de la National Basketball Association, nous avons pu nous intéresser aux statistiques des clubs et des joueurs présents au sein de cette compétition entre 1978 et 2015.')),
@@ -105,11 +105,11 @@ ui <- dashboardPage(
                               tabsetPanel(
                                   tabPanel('Caractéristiques générales', 
                                            fluidRow(
-                                               box(title = "Diagramme concernant la manualité des joueurs", plotOutput('varpie')), 
-                                               box(title = "Interprétation", HTML('Bonjour'))),
+                                               box(title = "Diagramme concernant la manualité des joueurs", status = "primary", solidHeader = TRUE, plotOutput('varpie')), 
+                                               box(title = "Interprétation", status = "primary", solidHeader = TRUE, HTML('Nous remarquons sur ce diagramme que 94% des joueurs de la NBA sont droitiers. D\'après internet, 90% des humains seraient droitiers, 10% seraient gauchers et 1% seraient ambidextres. Les joueurs de la NBA sont donc plutôt représentatifs de la population mondiale concernant leur préférence manuelle.'))),
                                            fluidRow( 
-                                               box(title = "Histogramme sur la répartition de la taille des joueurs", plotOutput('varhisto')),
-                                               box(title = "Interprétation", HTML('Bonjour')))),
+                                               box(title = "Histogramme sur la répartition de la taille des joueurs", status = "danger", solidHeader = TRUE, plotOutput('varhisto')),
+                                               box(title = "Interprétation", status = "danger", solidHeader = TRUE, HTML('L\'histogramme représente donc la répartition des joueurs en fonction de leur taille. La courbe en pointillés bleue représente la taille moyenne des joueurs de basket dans notre base de données. La courbe en pointillés rouge représente quant à elle la taille moyenne des hommes aux États-Unis. Cet histogramme met donc en avant le fait que les hommes jouant au baksets aux États-unis sont beaucoup plus grand que le reste de la population.')))),
                                   tabPanel('Caractéristiques d\'un joueur', 
                                            selectizeInput('joueurs_id', 'Joueurs', choices = joueurs_names,
                                                           options = list(
