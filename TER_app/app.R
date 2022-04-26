@@ -99,7 +99,13 @@ ui <- dashboardPage(
                     fluidPage(h1("Caratéristiques des joueurs"),
                               tabsetPanel(
                                   tabPanel('Carte des lieux de naissance'),
-                                  tabPanel('Caractéristiques générales', plotOutput('varpie'), plotOutput('varhisto')),
+                                  tabPanel('Caractéristiques générales', 
+                                           fluidRow(
+                                               box(title = "Diagramme concernant la manualité des joueurs", plotOutput('varpie')), 
+                                               box(title = "Interprétation", HTML('Bonjour'))),
+                                           fluidRow( 
+                                               box(title = "Histogramme sur la répartition de la taille des joueurs", plotOutput('varhisto')),
+                                               box(title = "Interprétation", HTML('Bonjour')))),
                                   tabPanel('Caractéristiques d\'un joueur', 
                                            selectizeInput('joueurs_id', 'Joueurs', choices = joueurs_names,
                                                           options = list(
@@ -169,30 +175,32 @@ server <- function(input, output) {
     })
     
     #Camembert
-    output$varpie <- renderPlot({
+    output$varpie <- renderPlot({ 
         df <- data.frame(
             group <- c("Left", "Left/Right", "Right"), 
             value <- c(283, 1, 4400))
-        pie <- ggplot(df, aes(x="", y=value, fill=group)) +
-            geom_bar(width = 1, stat = "identity") + 
-            coord_polar(theta = "y") + 
-            scale_fill_brewer(type = "seq", direction = -1, palette="Blues") +
-            geom_text(aes(y = value/3 + c(0, cumsum(value)[-length(value)]), 
-                          label=paste(group,"\n",round((value/sum(value))*100), "%")))+
-            theme_minimal()
+        pie <- ggplot(df, aes(x="", y=value, fill=group)) + # Fonction aes qui nous permet d'indiquer quelle donnée nous voulons représenter
+            xlab ("") +
+            ylab("") +
+            geom_bar(width = 1, stat = "identity") + # Geom sont des outils de représentation graphique, ici va remplir l'intérieur du diagramme, si vous souhaitez que les hauteurs des barres représentent des valeurs dans les données, utilisez stat="identity" 
+            coord_polar(theta = "y") + # Variable pour l'angle, les camemberts sont des diagrammes à barres empilées en coordonnées polaires.
+            scale_fill_brewer(type = "seq", direction = 1, palette="Blues") + # Seq = de type sequence, direction va donner le sens dans lequel les couleurs vont être affichées, palette va donner les couleurs
+            geom_text(aes(y = value/4 + c(0, cumsum(value)[-length(value)]), # y va diviser la part en parties, va permettre de placer le texte (pas très bien compris)
+                          label=paste(group,round((value/sum(value))*100), "%")))+ # Affichage des pourcentages à l'intérieur du diagramme
+            theme_minimal() # Pour mettre le thème du pie
         pie
     })
     
     #Histogramme
     output$varhisto <- renderPlot({
-        histo <- ggplot(data_players, aes(x = as.numeric(as.character(data_players$Taille)))) +
-            geom_histogram(color="black", fill="white") +
-            xlab ("Taille des joueurs") +
-            ylab("Nombre de joueurs") +
+        histo <- ggplot(data_players, aes(x = as.numeric(as.character(data_players$Taille)))) + # Fonction aes qui nous permet d'indiquer quelle donnée nous voulons représenter
+            geom_histogram(color="black", fill="white") + # On choisit la couleur de l'histogramme
+            xlab ("Taille des joueurs") + # Nom des x 
+            ylab("Nombre de joueurs") + # Nom des y 
             geom_vline(aes(xintercept=mean(as.numeric(as.character(data_players$Taille)))),
-                       color="blue", linetype="dashed", size=1) +
+                       color="blue", linetype="dashed", size=1) + # Ajout de la ligne pour la moyenne de nos données 
             geom_vline(aes(xintercept=1.754),
-                       color="red", linetype="dashed", size=1)
+                       color="red", linetype="dashed", size=1) # Ajout de la ligne pour la moyenne des hommes
         histo
     })
 }
