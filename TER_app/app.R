@@ -79,7 +79,7 @@ ui <- dashboardPage(
                                            box(title='Structure de la page',status = "primary",solidHeader = TRUE,p('Nous avons créé la structure de l’application avec deux onglets : le premier concernant les clubs et le deuxième, les joueurs. Dans l’onglet des clubs, il nous paraissait primordial d’afficher les clubs présents lors de cette compétition. Nous avons donc réalisé un datatable pour présenter ces variables. Puis, dans le sous-onglet suivant, nous voulions que l’utilisateur puisse sélectionner un club et une année pour pouvoir accès aux différents joueurs jouant dans le club choisi. La présentation sous forme de datatable avec des barres de recherches nous a semblé la plus esthétique et adaptée. Ensuite, le résumé statistique nous permet de comprendre les données et les graphiques de mieux les visualiser. La prise en main du package ggplot a aussi été un challenge puisque nous étions en autonomie. Enfin, la création d’une carte localisant les différents clubs nous a permis d’avoir une application un peu plus ludique pour l’utilisateur.Par ailleurs, l’onglet joueurs est un peu moins exhaustif puisque nous avons effectué des statistiques sur les caractéristiques générales. Par exemple, nous avons réalisé des graphiques au sujet de la main de tir mais aussi de la taille des joueurs.Dans un autre sous-onglet, nous avons affiché les informations personnelles de chaque joueur grâce à une barre de recherche.')),
                                            box(title='Visualisation de l\'application',status = "primary",solidHeader = TRUE,p('Après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.')),
                                            box(title = 'Conclusion',status = "danger",solidHeader = TRUE,p('En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.'))),
-                                  tabPanel("Présentation de la NBA",imageOutput("logo"), leafletOutput("map_nba")),
+                                  tabPanel("Présentation de la NBA",imageOutput("logo"),box(title="Quelques informations sur la NBA",solidHeader=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
                               ))),
             tabItem(tabName="dunks", 
                     fluidPage(h1("Meilleurs Dunks de 2016"),tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
@@ -139,6 +139,11 @@ server <- function(input, output) {
     #affichage du logo 
     output$logo <- renderImage({
         list(src="../Data/logo_NBA.png",alt="logo NBA",width=150,height=250,vspace=25,style='position : relative')
+    },deleteFile=FALSE)
+    
+    #affichage du logo pour la présentation de la NBA
+    output$logo_info <- renderImage({
+        list(src="Data/nba_carte.png",alt="logo NBA",width=350,height=200,style='position : relative')
     },deleteFile=FALSE)
     
     #Sorti de l'onglet club
