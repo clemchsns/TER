@@ -70,7 +70,7 @@ ui <- dashboardPage(
         ),
         tabItems(
             tabItem(tabName="TER",
-                    fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "http://www.wallfizz.com/sport/basketball/871-basketball-WallFizz.jpg", shinydashboard = TRUE),
+                    fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            box(title='Choix du sujet',status = "danger",solidHeader = TRUE, p('Lors du second semestre de notre licence 3 en Mathématiques et Informatique Appliquées Aux Sciences Humaines et Sociales, nous avons pu choisir un sujet de travail encadré par un de nos enseignants. Pour notre part, Clémence, Margaux, Marie et Oriane, nous avons choisi de réaliser une application WEB à l’aide du logiciel R Shiny. Effectivement, notre attrait pour l’informatique nous a poussé à choisir ce sujet.  Aussi, nous sommes toutes passionnées de sport, il nous a donc paru important d’introduire cette thématique dans notre projet. Nous avons choisi d’analyser une compétition connue dans le monde entier : la NBA. Grâce aux nombreuses bases de données trouvées au sujet de la National Basketball Association, nous avons pu nous intéresser aux statistiques des clubs et des joueurs présents au sein de cette compétition entre 1978 et 2015.')),
@@ -79,10 +79,10 @@ ui <- dashboardPage(
                                            box(title='Structure de la page',status = "primary",solidHeader = TRUE,p('Nous avons créé la structure de l’application avec deux onglets : le premier concernant les clubs et le deuxième, les joueurs. Dans l’onglet des clubs, il nous paraissait primordial d’afficher les clubs présents lors de cette compétition. Nous avons donc réalisé un datatable pour présenter ces variables. Puis, dans le sous-onglet suivant, nous voulions que l’utilisateur puisse sélectionner un club et une année pour pouvoir accès aux différents joueurs jouant dans le club choisi. La présentation sous forme de datatable avec des barres de recherches nous a semblé la plus esthétique et adaptée. Ensuite, le résumé statistique nous permet de comprendre les données et les graphiques de mieux les visualiser. La prise en main du package ggplot a aussi été un challenge puisque nous étions en autonomie. Enfin, la création d’une carte localisant les différents clubs nous a permis d’avoir une application un peu plus ludique pour l’utilisateur.Par ailleurs, l’onglet joueurs est un peu moins exhaustif puisque nous avons effectué des statistiques sur les caractéristiques générales. Par exemple, nous avons réalisé des graphiques au sujet de la main de tir mais aussi de la taille des joueurs.Dans un autre sous-onglet, nous avons affiché les informations personnelles de chaque joueur grâce à une barre de recherche.')),
                                            box(title='Visualisation de l\'application',status = "primary",solidHeader = TRUE,p('Après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.')),
                                            box(title = 'Conclusion',status = "danger",solidHeader = TRUE,p('En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.'))),
-                                  tabPanel("Présentation de la NBA",imageOutput("logo"),box(title="Quelques informations sur la NBA",solidHeader=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
+                                  tabPanel("Présentation de la NBA", box(title="Quelques informations sur la NBA",solidHeader=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
                               ))),
             tabItem(tabName="dunks", 
-                    fluidPage(h1("Meilleurs Dunks de 2016"),tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/wpizP7Vehnw", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA))
+                    fluidPage(h1("Dix dunks impressionnants !"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
@@ -96,7 +96,7 @@ ui <- dashboardPage(
                         ),
                         tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),dataTableOutput('summary')),
                         tabPanel('Graphiques',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub')),
-                        tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe")),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"))),
+                        tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe"),multiple=FALSE),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"),multiple=FALSE),verbatimTextOutput(outputId = "RegSum"),verbatimTextOutput(outputId = "IndPrint"),verbatimTextOutput(outputId = "DepPrint")),
                         tabPanel('Carte des clubs', h3("Carte des clubs"),
                                  leafletOutput("map_points"))
                     )
@@ -136,14 +136,9 @@ ui <- dashboardPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    #affichage du logo 
-    output$logo <- renderImage({
-        list(src="../Data/logo_NBA.png",alt="logo NBA",width=150,height=250,vspace=25,style='position : relative')
-    },deleteFile=FALSE)
-    
     #affichage du logo pour la présentation de la NBA
     output$logo_info <- renderImage({
-        list(src="Data/nba_carte.png",alt="logo NBA",width=350,height=200,style='position : relative')
+        list(src="../Data/nba_carte.png",alt="logo NBA",width=350,height=200,style='position : relative')
     },deleteFile=FALSE)
     
     #Sorti de l'onglet club
@@ -222,6 +217,13 @@ server <- function(input, output) {
                        color="red", linetype="dashed", size=1) # Ajout de la ligne pour la moyenne des hommes
         histo
     })
+    
+    #régression linéaire
+    lm1 <- reactive({lm(paste0(input$var_reg) ~ paste0(input$var_explicative), data = data_equipe)})
+    
+    output$DepPrint <- renderPrint({input$DepVar})
+    output$IndPrint <- renderPrint({input$IndVar})
+    output$RegSum <- renderPrint({summary(lm1())})
     
     #liste rétrospective
     output$liste_acquis <- renderUI(
