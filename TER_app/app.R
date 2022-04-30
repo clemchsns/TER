@@ -4,7 +4,6 @@ library(shinydashboard)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
-library(DT)
 library(shinyWidgets)
 
 # ouverture de la base de donnees
@@ -123,7 +122,6 @@ ui <- dashboardPage(
             tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
                               HTML('Conclusion de notre TER'),
-                              checkboxInput("R shiny", "Acquisition de R shiny", TRUE),
                               uiOutput("liste_acquis")))
         )
     )
@@ -216,7 +214,11 @@ server <- function(input, output) {
     })
     
     #liste rétrospective
-    output$liste_acquis <- renderUI(HTML("<ul><li>autonomie</li><li>efficacité</li></ul>"))
+    output$liste_acquis <- renderUI(
+    box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9 Apprentissage de R Shiny 
+    <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul></p>
+    <br>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x2610;")),
+    box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("<br>&#x2610;Mise en place d'un fond d'écran animé<br>&#x2610;")))
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
