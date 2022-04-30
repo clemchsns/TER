@@ -122,7 +122,7 @@ ui <- dashboardPage(
             tabItem("Retro",
                     fluidPage(h1("Rétrospective"),
                               HTML('Conclusion de notre TER'),
-                              uiOutput("liste_acquis")))
+                              uiOutput("liste_acquis"),uiOutput("liste_difficultes")))
         )
     )
     
@@ -217,7 +217,8 @@ server <- function(input, output) {
     output$liste_acquis <- renderUI(
     box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9 Apprentissage de R Shiny 
     <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul></p>
-    <br>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x2610;")),
+    <br>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x2610;")))
+    output$liste_difficultes <- renderUI(
     box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("<br>&#x2610;Mise en place d'un fond d'écran animé<br>&#x2610;")))
 }
 # Run the application 
