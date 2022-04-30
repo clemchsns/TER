@@ -5,6 +5,7 @@ library(dplyr)
 library(ggplot2)
 library(leaflet)
 library(shinyWidgets)
+library(dashboardthemes)
 
 # ouverture de la base de donnees
 data_equipe <- read.csv("../Data/NBA_Season_Data.csv", header=TRUE, stringsAsFactors=TRUE)
@@ -64,6 +65,9 @@ ui <- dashboardPage(
             menuItem("Restrospective du projet", tabName = "Retro", icon = icon("tasks"))
         )),
     dashboardBody(
+        shinyDashboardThemes(
+            theme = "purple_gradient"
+        ),
         tabItems(
             tabItem(tabName="TER",
                     fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "http://www.wallfizz.com/sport/basketball/871-basketball-WallFizz.jpg", shinydashboard = TRUE),
@@ -127,6 +131,7 @@ ui <- dashboardPage(
     )
     
 )
+
 
 
 # Define server logic required to draw a histogram
@@ -215,11 +220,10 @@ server <- function(input, output) {
     
     #liste rétrospective
     output$liste_acquis <- renderUI(
-    box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9 Apprentissage de R Shiny 
-    <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul></p>
-    <br>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x2610;")))
+    box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9;Réalisation d'une application WEB à l'aide du logiciel R Shiny<br>&#x1F5F9 Apprentissage de R Shiny 
+    <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x1F5F9;Recherche")))
     output$liste_difficultes <- renderUI(
-    box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("<br>&#x2610;Mise en place d'un fond d'écran animé<br>&#x2610;")))
+    box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("&#x2610;Mise en place d'un fond d'écran animé<br>&#x2610;Prise en main de ggplot")))
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
