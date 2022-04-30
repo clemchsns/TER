@@ -66,7 +66,7 @@ ui <- dashboardPage(
         )),
     dashboardBody(
         shinyDashboardThemes(
-            theme = "purple_gradient"
+            theme = "grey_dark"
         ),
         tabItems(
             tabItem(tabName="TER",
