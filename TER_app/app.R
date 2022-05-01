@@ -74,6 +74,8 @@ ui <- dashboardPage(
         tabItems(
             tabItem(tabName="TER",
                     fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
+                              tags$style(HTML("
+    .tabbable > .nav > li > a {background-color: lightgrey;   color:white}")),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            fluidRow(style='margin:3px;'),
@@ -90,7 +92,7 @@ ui <- dashboardPage(
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
-                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1.8px black\">Les différents clubs de la NBA</h1>"),
+                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Les différents clubs de la NBA</h1>"),
                                  HTML("<p style=\" font-size:x-large ; -webkit-text-stroke: 1px black\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
                         tabPanel('Les joueurs des différents clubs',fluidRow(style='margin:3px;'),box(selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets"))),box(sliderInput("annee_club", label = h3("Années"), min = 1978,max = 2015, value = 1978)),verbatimTextOutput("textcj"),dataTableOutput("varcj")),
                         tabPanel('Statistiques',fluidRow(style='margin:3px;'),verbatimTextOutput("summary_text"),dataTableOutput('summary')),
