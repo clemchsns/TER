@@ -68,6 +68,8 @@ ui <- dashboardPage(
         tabItems(
             tabItem(tabName="TER",
                     fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
+                              tags$style(HTML("
+    .tabbable > .nav > li > a {background-color: lightgrey;   color:white}")),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            fluidRow(style='margin:3px;'),
