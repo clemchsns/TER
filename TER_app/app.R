@@ -74,8 +74,6 @@ ui <- dashboardPage(
         tabItems(
             tabItem(tabName="TER",
                     fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
-                              tags$style(HTML("
-    .tabbable > .nav > li > a {background-color: lightgrey;   color:white}")),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            fluidRow(style='margin:3px;'),
@@ -86,14 +84,13 @@ ui <- dashboardPage(
                                            box(title='Visualisation de l\'application',status = "primary",solidHeader = TRUE,p('Après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.')),
                                            box(title = 'Conclusion',status = "danger",solidHeader = TRUE,('En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.'))),
                                   tabPanel("Présentation de la NBA", fluidRow(style='margin:3px;'),box(title="Cliquez ici pour avoir des informations sur la NBA",solidHeader=TRUE,status="primary",collapsible=TRUE,collapsed=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : Principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
-                                  tabPanel("Présentation des créateurs de l'application",box(imageOutput("margaux")),box(imageOutput("oriane")),box(imageOutput("marie")),box(imageOutput("clemence"))),
                               ))),
             tabItem(tabName="dunks", 
                     fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Dix dunks impressionnants !</h1>"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
-                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Les différents clubs de la NBA</h1>"),
+                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1.8px black\">Les différents clubs de la NBA</h1>"),
                                  HTML("<p style=\" font-size:x-large ; -webkit-text-stroke: 1px black\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
                         tabPanel('Les joueurs des différents clubs',fluidRow(style='margin:3px;'),box(selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets"))),box(sliderInput("annee_club", label = h3("Années"), min = 1978,max = 2015, value = 1978)),verbatimTextOutput("textcj"),dataTableOutput("varcj")),
                         tabPanel('Statistiques',fluidRow(style='margin:3px;'),verbatimTextOutput("summary_text"),dataTableOutput('summary')),
@@ -150,20 +147,6 @@ server <- function(input, output) {
         paste("Voici les joueurs ayant été dans le club", input$varcj,"pour l'année",input$annee_club)
     })
     output$varcj <- renderDataTable(data_base[which(data_base$Equipe==input$varcj & data_base$Annee==input$annee_club),][,c(1,3)],rownames=FALSE)
-    
-    #carte présentation
-    output$marie <- renderImage({
-        list(src="../Data/Pokémon Marie .png",alt="marie",width=300,height=400,style='position : relative')
-    },deleteFile=FALSE)
-    output$clemence <- renderImage({
-        list(src="../Data/Pokemon Clemence.jpg",alt="clemence",width=300,height=400,style='position : relative')
-    },deleteFile=FALSE)
-    output$oriane <- renderImage({
-        list(src="../Data/Pokemon Oriane.png",alt="oriane",width=300,height=400,style='position : relative')
-    },deleteFile=FALSE)
-    output$margaux <- renderImage({
-        list(src="../Data/Pokémon Margaux.png",alt="margaux",width=300,height=400,style='position : relative')
-    },deleteFile=FALSE)
     
     #Résumé statistique
     output$summary <- renderDataTable(summary(data_base),rownames=FALSE)
