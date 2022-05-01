@@ -73,7 +73,7 @@ ui <- dashboardPage(
         ),
         tabItems(
             tabItem(tabName="TER",
-                    fluidPage(h1("Présentation de notre TER"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
+                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            box(title='Choix du sujet',status = "danger",solidHeader = TRUE, p('Lors du second semestre de notre licence 3 en Mathématiques et Informatique Appliquées Aux Sciences Humaines et Sociales, nous avons pu choisir un sujet de travail encadré par un de nos enseignants. Pour notre part, Clémence, Margaux, Marie et Oriane, nous avons choisi de réaliser une application WEB à l’aide du logiciel R Shiny. Effectivement, notre attrait pour l’informatique nous a poussé à choisir ce sujet.  Aussi, nous sommes toutes passionnées de sport, il nous a donc paru important d’introduire cette thématique dans notre projet. Nous avons choisi d’analyser une compétition connue dans le monde entier : la NBA. Grâce aux nombreuses bases de données trouvées au sujet de la National Basketball Association, nous avons pu nous intéresser aux statistiques des clubs et des joueurs présents au sein de cette compétition entre 1978 et 2015.')),
@@ -85,22 +85,22 @@ ui <- dashboardPage(
                                   tabPanel("Présentation de la NBA", box(title="Quelques informations sur la NBA",solidHeader=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
                               ))),
             tabItem(tabName="dunks", 
-                    fluidPage(h1("Dix dunks impressionnants !"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
+                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Dix dunks impressionnants !</h1>"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
-                        tabPanel('Les clubs de la NBA', h1("Les différents clubs de la NBA"),
-                                 HTML("<p style=\"font-size:x-large\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
+                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1.8px black\">Les différents clubs de la NBA</h1>"),
+                                 HTML("<p style=\" font-size:x-large ; -webkit-text-stroke: 1px black\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
                         tabPanel('Les joueurs des différents clubs',box(selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets"))),box(sliderInput("annee_club", label = h3("Années"), min = 1978,max = 2015, value = 1978)),verbatimTextOutput("textcj"),dataTableOutput("varcj")),
                         tabPanel('Statistiques',verbatimTextOutput("summary_text"),dataTableOutput('summary')),
                         tabPanel('Efficacité des clubs',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub'), plotOutput('nbpaniers'),verbatimTextOutput('nb_paniers_text')),
                         tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe"),multiple=FALSE),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"),multiple=FALSE),verbatimTextOutput(outputId = "RegSum"),verbatimTextOutput(outputId = "IndPrint"),verbatimTextOutput(outputId = "DepPrint")),
-                        tabPanel('Carte des clubs', h3("Carte des clubs"),
+                        tabPanel('Carte des clubs', HTML("<h3 style=\"-webkit-text-stroke: 1px black\">Carte des clubs</h3>"),
                                  leafletOutput("map_points"))
                     )
             ),
             tabItem("Joueurs",
-                    fluidPage(h1("Caratéristiques des joueurs"),
+                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Caratéristiques des joueurs</h1>"),
                               tabsetPanel(
                                   tabPanel('Caractéristiques générales', 
                                            fluidRow(
@@ -122,7 +122,7 @@ ui <- dashboardPage(
                               ))),
             
             tabItem("Retro",
-                    fluidPage(h1("Rétrospective"),
+                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Rétrospective</h1>"),
                               HTML('Conclusion de notre TER'),
                               uiOutput("liste_acquis"),uiOutput("liste_difficultes")))
         )
