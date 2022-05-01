@@ -57,7 +57,7 @@ ui <- dashboardPage(
                     tags$li(class="dropdown",tags$a(href="https://twitter.com/NBA?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor", icon("twitter"), "Twitter", target = "_blank")),
                     tags$li(class="dropdown",tags$a(href="https://www.beinsports.com/france/nba/?gr=www",  "Site Officiel", target = "_blank")),
                     tags$li(class="dropdown",tags$a(href="https://www.instagram.com/nba/?hl=fr",icon("instagram") , "Instagram", target = "_blank")),
-                    dropdownMenu(type="message", messageItem(from="Notification",message="Bienvenue sur notre application WEB au sujet de la NBA ! Bonne visite !",icon=icon("envelope-open")))),
+                    dropdownMenu(type="message", messageItem(from="Notification",message="Bienvenue sur notre application WEB!",icon=icon("envelope-open")))),
     dashboardSidebar(
         sidebarMenu(
             menuItem("Accueil", tabName = "Accueil", icon = icon("basketball-ball"),
@@ -97,8 +97,8 @@ ui <- dashboardPage(
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   onInitialize = I('function() { this.setValue(""); }')
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               )),verbatimTextOutput("textcj"),dataTableOutput("varcj")
                         ),
-                        tabPanel('Statistiques',HTML("Ci-dessous le résumé statistique de la base de données 'data'. <br />On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 et 2015."),dataTableOutput('summary')),
-                        tabPanel('Graphiques',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub')),
+                        tabPanel('Statistiques',verbatimTextOutput("summary_text"),dataTableOutput('summary')),
+                        tabPanel('Efficacité des clubs',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub'), plotOutput('nbpaniers'),verbatimTextOutput('nb_paniers_text')),
                         tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe"),multiple=FALSE),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"),multiple=FALSE),verbatimTextOutput(outputId = "RegSum"),verbatimTextOutput(outputId = "IndPrint"),verbatimTextOutput(outputId = "DepPrint")),
                         tabPanel('Carte des clubs', h3("Carte des clubs"),
                                  leafletOutput("map_points"))
@@ -153,6 +153,10 @@ server <- function(input, output) {
     
     #Résumé statistique
     output$summary <- renderDataTable(summary(data_base),rownames=FALSE)
+    output$summary_text <- renderText({"Ci-dessous le résumé statistique de la base de données 'data'.
+On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. 
+Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 
+et 2015."})
     
     #Histogramme (output$id_sortie de plotOutput)
     output$hist <- renderPlot({
@@ -165,6 +169,7 @@ server <- function(input, output) {
     })
     
     output$cara <- renderDataTable({DT::datatable(data=data_base[which(data_base$Nom==input$joueurs_id & data_base$Annee==input$annee),][,c(1:2,4:18,20)],option= list(scrollX=TRUE),rownames=FALSE)})
+    
     #Nuage de points
     output$varclub <- renderPlot({
         data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
@@ -174,6 +179,17 @@ server <- function(input, output) {
             geom_point()+geom_smooth()+theme_bw()
         
     })
+    output$nbpaniers <- renderPlot({
+        data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
+        data_base$NbPaniers[which(data_base$Equipe==input$varclub)]
+        #        plot(EfficaciteTirEquipe ~ Annee, data = data_base1)
+        ggplot(data_base1)+aes(x=Annee,y=NbPaniers)+
+            geom_point()+geom_smooth()+theme_bw()
+        
+    })
+    
+    output$nb_paniers_text <-renderText({"Pour une année il y a plusieurs points car un point correspond à chaque paniers marqué par un joueur.
+La courbe bleue est la tendande du nombre de panier pour chaque année."})
     
     #Carte des clubs 
     output$map_points <- renderLeaflet({
