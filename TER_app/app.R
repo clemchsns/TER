@@ -241,10 +241,10 @@ La courbe bleue est la tendande du nombre de panier pour chaque année."})
     
     #liste rétrospective
     output$liste_acquis <- renderUI(
-    box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9;Réalisation d'une application WEB à l'aide du logiciel R Shiny<br>&#x1F5F9 Apprentissage de R Shiny 
-    <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul>&#x1F5F9;Autonomie et responsabilité<br>&#x1F5F9;Efficacité<br>&#x1F5F9;Créativité<br>&#x1F5F9;Travail de groupe<br>&#x1F5F9;Recherche")))
+        box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9; Réalisation d'une application WEB à l'aide du logiciel R Shiny<br>&#x1F5F9 Apprentissage de R Shiny 
+    <p>Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li></ul>&#x1F5F9; Autonomie et responsabilité<br>&#x1F5F9; Efficacité<br>&#x1F5F9; Créativité<br>&#x1F5F9; Travail de groupe<br>&#x1F5F9; Recherche")))
     output$liste_difficultes <- renderUI(
-    box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("&#x2610;Mise en place d'un fond d'écran animé<br>&#x2610;Prise en main de ggplot")))
+        box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("&#x2610; Mise en place d'un fond d'écran animé<br>&#x2610; Affichage des derniers tweets concernant la NBA (en temps réel)<br>&#x2610; Mise en place d'un dossier CSS<br>&#x2610;<p><li>Compréhension du fonctionnement du logiciel R Shiny</li><li>Recherche d'une base de données adaptée à nos envies</li><li>Trouver une image de fond d'écran publique et de bonne qualité</li><li>Mise en place d'une régression réactive</li><li>Prise en main de ggplot</li></p>")))
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
