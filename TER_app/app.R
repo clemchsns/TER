@@ -79,7 +79,7 @@ ui <- dashboardPage(
                                            box(title='Structure de la page',status = "primary",solidHeader = TRUE,p('L\'application comporte quatre pages différentes : la première concerne l\'accueil, la seconde concerne les clubs de la NBA, la troisième contient les informations des joueurs et la dernière nous permet de conclure notre TER. Dans la deuxième page, l\'onglet des équipes affiche les clubs présents lors de la compétition. Nous avons donc réalisé un datatable pour présenter ces différentes variables. Dans l\'onglet suivant, nous voulions que l’utilisateur puisse avoir accès aux différents joueurs en fonction d\'un club et d\'une année qu\'il aura préalablement sélectionné. Ensuite, le résumé statistique nous permet de comprendre les données et les graphiques nous permettent de mieux les visualiser. Enfin, la création d’une carte localisant les différents clubs nous a permis d’avoir une application un peu plus ludique pour l’utilisateur. Par ailleurs, la page sur les joueurs est un peu moins exhaustive puisque nous avons effectué des statistiques sur les caractéristiques générales. Par exemple, nous avons réalisé des graphiques au sujet de la main de tir mais aussi de la taille des joueurs. Dans un autre onglet, nous avons affiché les informations personnelles de chaque joueur grâce à une barre de recherche.')),
                                            box(title='Visualisation de l\'application',status = "primary",solidHeader = TRUE,p('Après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets ou encore le thème de l\'application. De plus, la recherche de la mise en place d’un fond d’écran nous a permis de mettre l’application à notre goût et à notre image.')),
                                            box(title = 'Conclusion',status = "danger",solidHeader = TRUE,('En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.'))),
-                                  tabPanel("Présentation de la NBA", fluidRow(style='margin:3px;'),box(title="Cliquez ici pour avoir des informations sur la NBA",solidHeader=TRUE,status="primary",collapsible=TRUE,collapsed=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : Principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
+                                  tabPanel("Présentation de la NBA", fluidRow(style='margin:3px;'),box(title="Cliquez ici pour avoir des informations sur la NBA",solidHeader=TRUE,status="primary",collapsible=TRUE,collapsed=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : Principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : Professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
                                   tabPanel("Présentation des créateurs de l'application",fluidRow(style='margin:3px;'),box(imageOutput("margaux"), align = "center"),box(imageOutput("oriane"), align = "center"),box(imageOutput("marie"), align = "center"),box(imageOutput("clemence"), align = "center")),
                               ))),
             tabItem(tabName="dunks", 
@@ -93,10 +93,10 @@ ui <- dashboardPage(
                         tabPanel('Statistiques',fluidRow(style='margin:3px;'),verbatimTextOutput("summary_text"),dataTableOutput('summary')),
                         tabPanel('Efficacité des clubs',fluidRow(style='margin:3px;'), selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), 
                                  fluidRow(box(plotOutput('varclub')),
-                                          box(title = "Interprétation", HTML("La courbe représente la variation de l'efficacité de tir de l'équipe entre 1978 à 2015. Pour chaque année, il y a une efficacité de tir (répresenté avec un point noir sur le graphique ci-contre). En effet, pour calculer la réussite au tir, on prend le nombre de paniers marqués, on le divise par le nombre de paniers tentés et on obtient le pourcentage de réussite. <br> Par exemple, prenez l'efficacité de tirs de l'équipe \"les Atlanta Hawks\". Effectivement de 1978 à 1990, l'équipe voit son efficacité de tir augmenter. Puis jusqu'en 2000, leur efficacité de tir diminue. Depuis ces dernières années, celle-ci ne cese de progresser. <br> Cas particulier : les buffalo braves. Ils ont été présent qu'une seule année au sein de la NBA, expliquant l'unique point. Il n'est pas pertinent de commenter son efficacité de tir."))),
+                                          box(title = "Interprétation", HTML("La courbe représente la variation de l'efficacité de tir de l'équipe entre 1978 à 2015. Pour chaque année, il y a une efficacité de tir (répresentée avec un point noir sur le graphique ci-contre). En effet, pour calculer la réussite au tir, on prend le nombre de paniers marqués, on le divise par le nombre de paniers tentés et on obtient le pourcentage de réussite. <br> Par exemple, prenez l'efficacité de tirs de l'équipe \"les Atlanta Hawks\". Effectivement entre 1978 et 1990, l'efficacité de tir est en hausse. Puis jusqu'en 2000, leur efficacité de tir diminue. Depuis ces dernières années, celle-ci ne cese de progresser. <p> Cas particulier : les buffalo braves. Ils ont été présents qu'une seule année au sein de la NBA, expliquant l'unique point. Il n'est pas pertinent de commenter son efficacité de tir."))),
                                  fluidRow(box(plotOutput('nbpaniers')),
                                           box(title = "Interprétation", HTML("Pour une année il y a plusieurs points puisqu'un point correspond à chaque panier marqué par un joueur.
-                                                                            La courbe bleue est la tendance du nombre de paniers pour chaque année. Nous remarquons que certaines valeurs sont négatives : ce sont des valeurs absurdes. La courbe bleue représente donc la moyenne du nombre de paniers par équipe en fonction des annnées.")))),
+                                                                             La courbe bleue représente donc la moyenne du nombre de paniers par équipe en fonction des annnées.Nous remarquons que certaines valeurs sont négatives : ce sont des valeurs absurdes. Elles sont sans doute dues à des erreurs de recensements.")))),
                         tabPanel('Carte des clubs', HTML("<h3 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Carte des clubs</h3>"),
                                  leafletOutput("map_points"))
                     )
@@ -108,10 +108,10 @@ ui <- dashboardPage(
                                            fluidRow(style='margin:3px;'),
                                            fluidRow(
                                                box(title = "Diagramme concernant la manualité des joueurs", status = "primary", solidHeader = TRUE, plotOutput('varpie')), 
-                                               box(title = "Interprétation", status = "primary", solidHeader = TRUE, HTML('Nous remarquons sur ce diagramme que 94% des joueurs de la NBA sont droitiers. D\'après internet, 90% des humains seraient droitiers, 10% seraient gauchers et 1% seraient ambidextres. Les joueurs de la NBA sont donc plutôt représentatifs de la population mondiale concernant leur préférence manuelle.'))),
+                                               box(title = "Interprétation", status = "primary", solidHeader = TRUE, HTML('Nous remarquons sur ce diagramme que 94% des joueurs de la NBA sont droitiers. Selon certaines études, 90% des humains seraient droitiers, 10% seraient gauchers et 1% seraient ambidextres. Les joueurs de la NBA sont donc plutôt représentatifs de la population mondiale concernant leur préférence manuelle.'))),
                                            fluidRow( 
                                                box(title = "Histogramme sur la répartition de la taille des joueurs", status = "danger", solidHeader = TRUE, plotOutput('varhisto')),
-                                               box(title = "Interprétation", status = "danger", solidHeader = TRUE, HTML('L\'histogramme représente donc la répartition des joueurs en fonction de leur taille. La courbe en pointillés bleue représente la taille moyenne des joueurs de basket dans notre base de données. La courbe en pointillés rouge représente quant à elle la taille moyenne des hommes aux États-Unis. Cet histogramme met donc en avant le fait que les hommes jouant au baksets aux États-unis sont beaucoup plus grand que le reste de la population.')))),
+                                               box(title = "Interprétation", status = "danger", solidHeader = TRUE, HTML('L\'histogramme représente donc la répartition des joueurs en fonction de leur taille. La courbe en pointillés bleue représente la taille moyenne des joueurs de basket dans notre base de données. La courbe rouge, quant à elle, concerne la taille moyenne des hommes aux États-Unis. Cet histogramme met donc en avant le fait que les hommes jouant au bakset aux États-unis sont beaucoup plus grands que le reste de la population.')))),
                                   tabPanel('Caractéristiques d\'un joueur', 
                                            fluidRow(style='margin:3px;'),
                                            selectizeInput('joueurs_id', 'Joueurs', choices = joueurs_names,
@@ -145,7 +145,7 @@ server <- function(input, output) {
     #Sorti de l'onglet club
     output$noms_clubs <- renderDataTable(unique(data_base[,1:2]),rownames=FALSE)   
     output$textcj <- renderText({
-        paste("Voici les joueurs ayant été dans le club", input$varcj,"pour l'année",input$annee_club)
+        paste("Voici les joueurs ayant été dans le club", input$varcj,"durant l'année",input$annee_club)
     })
     output$varcj <- renderDataTable(data_base[which(data_base$Equipe==input$varcj & data_base$Annee==input$annee_club),][,c(1,3)],rownames=FALSE)
     
@@ -165,8 +165,8 @@ server <- function(input, output) {
     
     #Résumé statistique
     output$summary <- renderDataTable(summary(data_base),rownames=FALSE)
-    output$summary_text <- renderText({"Ci-dessous le résumé statistique de la base de données 'data'.
-On y retrouve des données sur des clubs que l'on calcul grâce aux joueurs. 
+    output$summary_text <- renderText({"Ci-dessous le résumé statistique de la base de données 'data_base'.
+On y retrouve des données sur des clubs que l'on calcule grâce aux joueurs. 
 Par exemple, on peut évaluer l'efficacité des tirs des joueurs d'un club ou encore l'âge moyen des joueurs d'un club entre 1978 
 et 2015."})
     
@@ -177,7 +177,7 @@ et 2015."})
     
     #Afficher les caractéristiques des joueurs
     output$j <- renderText({
-        paste("Vous avez séléctionné le joueur", input$joueurs_id, "pour l'année",input$annee)
+        paste("Vous avez séléctionné le joueur",input$joueurs_id,"durant l'année",input$annee)
     })
     
     output$cara <- renderDataTable({DT::datatable(data=data_base[which(data_base$Nom==input$joueurs_id & data_base$Annee==input$annee),][,c(1:2,4:18,20)],option= list(scrollX=TRUE),rownames=FALSE)})
