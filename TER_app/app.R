@@ -93,7 +93,7 @@ ui <- dashboardPage(
                         tabPanel('Statistiques',fluidRow(style='margin:3px;'),verbatimTextOutput("summary_text"),dataTableOutput('summary')),
                         tabPanel('Efficacité des clubs',fluidRow(style='margin:3px;'), selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), 
                                  fluidRow(box(plotOutput('varclub')),
-                                          box(title = "Interprétation", HTML("La courbe représente la variation de l'efficacité de tir l'équipe  de 1978 à 2015. Pour chaque année, il y a une efficacité de tir (répresenter avec un point noir sur le graphique ci-contre).En effet, pour calculer la réussite au tir,on prend le nombre de paniers marqués, on le divise par le nombre de paniers tentés et on obtient le pourcentage de réussite. <br> Par  <strong>exemple </strong>, prenez les Atlanta Hawks, leurs efficacités de tir varient au fur à mesure des années. Effectivement de 1978 à 1990, l'equipe voit son efficacité de tir augmenter. Puis jusqu'en 2000,  leurs efficacités de tir diminuent. Puis, depuis celle -ci ne cese de progresser. Cas particulier, si vous prenez les buffalo braves, ils ont été présent qu'une seul année au sein de la NBA d'où le fate qu'il y ait qu'un seul point. Il n'est pas pertinent de commenter son efficacité de tir. "))),
+                                          box(title = "Interprétation", HTML("La courbe représente la variation de l'efficacité de tir de l'équipe entre 1978 à 2015. Pour chaque année, il y a une efficacité de tir (répresenté avec un point noir sur le graphique ci-contre). En effet, pour calculer la réussite au tir, on prend le nombre de paniers marqués, on le divise par le nombre de paniers tentés et on obtient le pourcentage de réussite. <br> Par exemple, prenez l'efficacité de tirs de l'équipe \"les Atlanta Hawks\". Effectivement de 1978 à 1990, l'équipe voit son efficacité de tir augmenter. Puis jusqu'en 2000, leur efficacité de tir diminue. Depuis ces dernières années, celle-ci ne cese de progresser. <br> Cas particulier : les buffalo braves. Ils ont été présent qu'une seule année au sein de la NBA, expliquant l'unique point. Il n'est pas pertinent de commenter son efficacité de tir."))),
                                  fluidRow(box(plotOutput('nbpaniers')),
                                           box(title = "Interprétation", HTML("Pour une année il y a plusieurs points puisqu'un point correspond à chaque panier marqué par un joueur.
                                                                             La courbe bleue est la tendance du nombre de paniers pour chaque année. Nous remarquons que certaines valeurs sont négatives : ce sont des valeurs absurdes. La courbe bleue représente donc la moyenne du nombre de paniers par équipe en fonction des annnées.")))),
@@ -186,18 +186,17 @@ et 2015."})
     output$varclub <- renderPlot({
         data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
         data_base$EfficaciteTirEquipe[which(data_base$Equipe==input$varclub)]
-        #        plot(EfficaciteTirEquipe ~ Annee, data = data_base1)
         ggplot(data_base1)+aes(x=Annee,y=EfficaciteTirEquipe)+
-            geom_point()+geom_smooth()+theme_bw()
-        
+            geom_point()+geom_smooth()+theme_bw()+
+            ggtitle(paste("Evolution de l'efficacité de Tirs de l'équipe",input$varclub))+theme(plot.title = element_text(hjust = 0.45))
     })
+    
     output$nbpaniers <- renderPlot({
         data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
         data_base$NbPaniers[which(data_base$Equipe==input$varclub)]
-        #        plot(EfficaciteTirEquipe ~ Annee, data = data_base1)
         ggplot(data_base1)+aes(x=Annee,y=NbPaniers)+
-            geom_point()+geom_smooth()+theme_bw()
-        
+            geom_point()+geom_smooth()+theme_bw()+
+            ggtitle(paste("Evolution du nombre de paniers de l'équipe",input$varclub))+theme(plot.title = element_text(hjust = 0.45))
     })
     
     #Carte des clubs 
@@ -229,7 +228,8 @@ et 2015."})
             scale_fill_brewer(type = "seq", direction = 1, palette="Blues") + # Seq = de type sequence, direction va donner le sens dans lequel les couleurs vont être affichées, palette va donner les couleurs
             geom_text(aes(y = value/4 + c(0, cumsum(value)[-length(value)]), # y va diviser la part en parties, va permettre de placer le texte (pas très bien compris)
                           label=paste(group,round((value/sum(value))*100), "%")))+ # Affichage des pourcentages à l'intérieur du diagramme
-            theme_minimal() # Pour mettre le thème du pie
+            theme_minimal()+ # Pour mettre le thème du pie
+            ggtitle("Main de tirs des joueurs")+theme(plot.title = element_text(hjust = 0.5))
         pie
     })
     
@@ -242,7 +242,8 @@ et 2015."})
             geom_vline(aes(xintercept=mean(as.numeric(as.character(data_players$Taille)))),
                        color="blue", linetype="dashed", size=1) + # Ajout de la ligne pour la moyenne de nos données 
             geom_vline(aes(xintercept=1.754),
-                       color="red", linetype="dashed", size=1) # Ajout de la ligne pour la moyenne des hommes
+                       color="red", linetype="dashed", size=1)+ # Ajout de la ligne pour la moyenne des hommes
+            ggtitle("Taille des joueurs de la NBA")+theme(plot.title = element_text(hjust = 0.45))
         histo
     })
     
