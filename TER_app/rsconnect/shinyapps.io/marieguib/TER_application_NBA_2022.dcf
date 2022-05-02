@@ -5,9 +5,9 @@ account: marieguib
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6216979
-bundleId: 5861480
+bundleId: 5861526
 url: https://marieguib.shinyapps.io/TER_application_NBA_2022/
-when: 1651515607.99582
-lastSyncTime: 1651515607.99582
+when: 1651516043.19757
+lastSyncTime: 1651516043.19757
 asMultiple: FALSE
 asStatic: FALSE
