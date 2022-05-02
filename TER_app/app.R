@@ -67,9 +67,9 @@ ui <- dashboardPage(
         ),
         tabItems(
             tabItem(tabName="TER",
-                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
+                    fluidPage(HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px \"> Présentation de notre TER</h1>"),setBackgroundImage(src = "https://images5.alphacoders.com/662/662367.jpg", shinydashboard = TRUE),
                               tags$style(HTML("
-    .tabbable > .nav > li > a {background-color: lightgrey;   color:white}")),
+    .tabbable > .nav > li > a {background-color: #32444F ; color:white}")),
                               tabsetPanel(
                                   tabPanel("Présentation de notre TER",
                                            fluidRow(style='margin:3px;'),
@@ -83,22 +83,22 @@ ui <- dashboardPage(
                                   tabPanel("Présentation des créateurs de l'application",fluidRow(style='margin:3px;'),box(imageOutput("margaux")),box(imageOutput("oriane")),box(imageOutput("marie")),box(imageOutput("clemence"))),
                               ))),
             tabItem(tabName="dunks", 
-                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Dix dunks impressionnants !</h1>"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
+                    fluidPage(HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Dix dunks impressionnants !</h1>"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
             ),
             tabItem("Clubs",
                     tabsetPanel( #diviser le tableau principal en onglets
-                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"-webkit-text-stroke: 1.8px black\">Les différents clubs de la NBA</h1>"),
-                                 HTML("<p style=\" font-size:x-large ; -webkit-text-stroke: 1px black\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
+                        tabPanel('Les clubs de la NBA', HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Les différents clubs de la NBA</h1>"),
+                                 HTML("<p style=\" font-size:large ; color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\"> Voici la liste des clubs de Basketball de la NBA depuis 1978 jusqu'à 2015:"),dataTableOutput('noms_clubs')),
                         tabPanel('Les joueurs des différents clubs',fluidRow(style='margin:3px;'),box(selectInput('varcj','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets"))),box(sliderInput("annee_club", label = h3("Années"), min = 1978,max = 2015, value = 1978)),verbatimTextOutput("textcj"),dataTableOutput("varcj")),
                         tabPanel('Statistiques',fluidRow(style='margin:3px;'),verbatimTextOutput("summary_text"),dataTableOutput('summary')),
                         tabPanel('Efficacité des clubs',selectInput('varclub','Choisissez un club :',choices=list("Atlanta Hawks", "Boston Celtics","Brooklyn Nets","Buffalo Braves", "Charlotte Hornets", "Chicago Hustle", "Chicago Bulls","Chicago Bruins", "Cleveland Cavaliers","Dallas Mavericks", "Denver Nuggets", "Detroit Pistons", "Golden State Warriors","Houston Rockets","Indiana Pacers","Kings of Sacramento","Los Angeles Clippers","Los Angeles Lakers","Memphis Grizzlies","Miami Heat", "Milwaukee Bucks","Minnesota Timberwolves","Brooklyn Nets","New Orleans Hurricanes","New Orleans Jazz Roster ans Stats","New Orleans/Oklahoma City","New Orleans Pelicans","New York Knicks","Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers", "Phoenix Suns","Portland Trail Blazers","Sacramento Kings","San Antonio Spurs", "San Diego Clippers","Seattle SuperSonics", "Toronto Raptors","Utah Jazz","Vancouver Grizzlies", "Washington Wizards","Washington Bullets")), plotOutput('varclub'), plotOutput('nbpaniers'),verbatimTextOutput('nb_paniers_text')),
                         tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe"),multiple=FALSE),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"),multiple=FALSE),verbatimTextOutput(outputId = "RegSum"),verbatimTextOutput(outputId = "IndPrint"),verbatimTextOutput(outputId = "DepPrint")),
-                        tabPanel('Carte des clubs', HTML("<h3 style=\"-webkit-text-stroke: 1px black\">Carte des clubs</h3>"),
+                        tabPanel('Carte des clubs', HTML("<h3 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Carte des clubs</h3>"),
                                  leafletOutput("map_points"))
                     )
             ),
             tabItem("Joueurs",
-                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Caratéristiques des joueurs</h1>"),
+                    fluidPage(HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Caratéristiques des joueurs</h1>"),
                               tabsetPanel(
                                   tabPanel('Caractéristiques générales', 
                                            fluidRow(style='margin:3px;'),
@@ -122,7 +122,7 @@ ui <- dashboardPage(
                               ))),
             
             tabItem("Retro",
-                    fluidPage(HTML("<h1 style=\"-webkit-text-stroke: 1px black\">Rétrospective de notre TER</h1>"),
+                    fluidPage(HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Rétrospective de notre TER</h1>"),
                               uiOutput("liste_acquis"),uiOutput("liste_difficultes")))
         )
     )
