@@ -256,10 +256,12 @@ et 2015."})
     
     #liste rétrospective
     output$liste_acquis <- renderUI(
-        box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9; Réalisation d'une application WEB à l'aide du logiciel R Shiny<br>&#x1F5F9 Apprentissage de R Shiny <br><p>&#x1F5F9; 
-    Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li><li>dashboardthemes</li></ul>&#x1F5F9; Autonomie et responsabilité<br>&#x1F5F9; Efficacité<br>&#x1F5F9; Créativité<br>&#x1F5F9; Travail de groupe<br>&#x1F5F9; Recherche")))
+        fluidRow(
+            box(title = "Apprentissage de nouvelles compétences", status = "success", solidHeader = TRUE, HTML("&#x1F5F9; Réalisation d'une application WEB à l'aide du logiciel R Shiny<br>&#x1F5F9 Apprentissage de R Shiny <br><p>&#x1F5F9; 
+            Packages : <ul><li>shinydashboard</li><li>dplyr</li><li>ggplot</li><li>leaflet</li><li>DT</li><li>shinyWidgets</li><li>dashboardthemes</li></ul>&#x1F5F9; Autonomie et responsabilité<br>&#x1F5F9; Efficacité<br>&#x1F5F9; Créativité<br>&#x1F5F9; Travail de groupe<br>&#x1F5F9; Recherche"))))
     output$liste_difficultes <- renderUI(
-        box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("&#x2610; Mise en place d'un fond d'écran animé<br>&#x2610; Affichage des derniers tweets concernant la NBA (en temps réel)<br>&#x2610; Mise en place d'un dossier CSS<br>&#x2610; Compréhension du fonctionnement du logiciel R Shiny<br>&#x2610; Recherche d'une base de données adaptée à nos envies<br>&#x2610; Trouver une image de fond d'écran publique et de bonne qualité<br>&#x2610; Mise en place d'une régression dynamique<br>&#x2610; Prise en main de ggplot<br>&#x2610; Adaptation de l'application suite à la modification du thème<br>&#x2610; Problème de PUSH et PULL avec GIT<br>&#x2610; Difficulté à se projeter et donc à établir le planning")))
+        fluidRow(box(title = "Difficultés rencontrées lors de notre TER", status = "danger", solidHeader = TRUE, HTML("&#x1F5F9; Compréhension du fonctionnement du logiciel R Shiny<br>&#x1F5F9; Recherche d'une base de données adaptée à nos envies<br>&#x1F5F9; Trouver une image de fond d'écran publique et de bonne qualité<br>&#x1F5F9; Prise en main de ggplot<br>&#x1F5F9; Adaptation de l'application suite à la modification du thème<br>&#x1F5F9; Problème de PUSH et PULL avec GIT<br>&#x1F5F9; Difficulté à se projeter et donc à établir le planning")),
+                 box(title = "Limites de notre application", status = "danger", solidHeader = TRUE,HTML("&#x2610; Mise en place d'un fond d'écran animé<br>&#x2610; Affichage des derniers tweets concernant la NBA (en temps réel)<br>&#x2610; Mise en place d'un dossier CSS<br>&#x2610; Mise en place d'une régression dynamique<br>"))))
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
