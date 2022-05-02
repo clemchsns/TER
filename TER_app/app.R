@@ -97,7 +97,6 @@ ui <- dashboardPage(
                                  fluidRow(box(plotOutput('nbpaniers')),
                                           box(title = "Interprétation", HTML("Pour une année il y a plusieurs points puisqu'un point correspond à chaque panier marqué par un joueur.
                                                                             La courbe bleue est la tendance du nombre de paniers pour chaque année. Nous remarquons que certaines valeurs sont négatives : ce sont des valeurs absurdes. La courbe bleue représente donc la moyenne du nombre de paniers par équipe en fonction des annnées.")))),
-                        tabPanel('Régression',selectizeInput('var_reg','Choisissez une variable à expliquer',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "EfficaciteTirEquipe"),multiple=FALSE),selectizeInput('var_explicative','Choisissez une variable explicative',choices=c("NbMatchs", "MinutesJouees", "NbPaniers", "PerfParMin", "EfficaciteTir", "Tentative3pts", "TentativesLancersFrancs", "PrctRebondOffensif", "PrctRebondDefensif", "NbTotalRebonds", "ControleBallon", "BallonsVoles", "BlocksParJeu", "NbTirs", "JoueurID", "EfficaciteTirEquipe"),multiple=FALSE),verbatimTextOutput(outputId = "RegSum"),verbatimTextOutput(outputId = "IndPrint"),verbatimTextOutput(outputId = "DepPrint")),
                         tabPanel('Carte des clubs', HTML("<h3 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Carte des clubs</h3>"),
                                  leafletOutput("map_points"))
                     )
@@ -246,13 +245,6 @@ et 2015."})
                        color="red", linetype="dashed", size=1) # Ajout de la ligne pour la moyenne des hommes
         histo
     })
-    
-    #régression linéaire
-    lm1 <- reactive({lm(paste0(input$var_reg) ~ paste0(input$var_explicative), data = data_base)})
-    
-    output$DepPrint <- renderPrint({input$DepVar})
-    output$IndPrint <- renderPrint({input$IndVar})
-    output$RegSum <- renderPrint({summary(lm1())})
     
     #liste rétrospective
     output$liste_acquis <- renderUI(
