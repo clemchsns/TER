@@ -80,7 +80,7 @@ ui <- dashboardPage(
                                            box(title='Visualisation de l\'application',status = "primary",solidHeader = TRUE,p('Après avoir réalisé l’ensemble de notre application, nous avons voulu faciliter son utilisation et rendre la rendre ergonomique et esthétique. Nous nous sommes focalisées sur les détails tels que la mise en place d’icônes pour accéder aux différents onglets mais aussi le thème choisi. De plus, la recherche de la mise en place d’un fond d’écran dynamique nous a permis de mettre l’application à notre goût et à notre image.')),
                                            box(title = 'Conclusion',status = "danger",solidHeader = TRUE,('En conclusion, la réalisation de notre application WEB à l’aide de R Shiny nous a permis de comprendre le fonctionnement d’un nouveau logiciel en totale autonomie. La pertinence des données présentées a été primordiale pour nous quatre. Notre application témoigne donc de notre passion partagée pour le sport mais aussi pour l’informatique.'))),
                                   tabPanel("Présentation de la NBA", fluidRow(style='margin:3px;'),box(title="Cliquez ici pour avoir des informations sur la NBA",solidHeader=TRUE,status="primary",collapsible=TRUE,collapsed=TRUE,imageOutput("logo_info", height = "225px"), HTML("Création : 6 juin 1946 à New York</br > Caractéristique : Principale ligue de Basketball au monde</br >Siège social : New York </br > Nombre d'équipes lors de la saison actuelle : 30</br >Statut des participants : professionnel </br > Champion acutel : Milwaukee Bucks")), leafletOutput("map_nba")),
-                                  tabPanel("Présentation des créateurs de l'application",fluidRow(style='margin:3px;'),box(imageOutput("margaux")),box(imageOutput("oriane")),box(imageOutput("marie")),box(imageOutput("clemence"))),
+                                  tabPanel("Présentation des créateurs de l'application",fluidRow(style='margin:3px;'),box(imageOutput("margaux"), align = "center"),box(imageOutput("oriane"), align = "center"),box(imageOutput("marie"), align = "center"),box(imageOutput("clemence"), align = "center")),
                               ))),
             tabItem(tabName="dunks", 
                     fluidPage(HTML("<h1 style=\"color : white ; background-color : lightgrey ; text-align : center ; border-radius : 10px\">Dix dunks impressionnants !</h1>"), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uVuYt7mJIfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
@@ -152,7 +152,7 @@ server <- function(input, output) {
     
     #carte présentation
     output$marie <- renderImage({
-        list(src="../Data/Pokémon Marie .png",alt="marie",width=300,height=400,style='position : relative')
+        list(src="../Data/Pokémon Marie .png",alt="marie",width=300,height=400,style='position : relative ')
     },deleteFile=FALSE)
     output$clemence <- renderImage({
         list(src="../Data/Pokemon Clemence.jpg",alt="clemence",width=300,height=400,style='position : relative')
