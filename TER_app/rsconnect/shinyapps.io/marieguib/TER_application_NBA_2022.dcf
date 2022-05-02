@@ -1,0 +1,13 @@
+name: TER_application_NBA_2022
+title: TER_application_NBA_2022
+username:
+account: marieguib
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6216979
+bundleId: 5861406
+url: https://marieguib.shinyapps.io/TER_application_NBA_2022/
+when: 1651514615.49436
+lastSyncTime: 1651514615.49436
+asMultiple: FALSE
+asStatic: FALSE
