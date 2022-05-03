@@ -151,7 +151,7 @@ server <- function(input, output) {
     
     #carte présentation
     output$marie <- renderImage({
-        list(src="Data/Pokémon Marie .png",alt="marie",width=300,height=400,style='position : relative ')
+        list(src="Data/Pokemon Marie.png",alt="marie",width=300,height=400,style='position : relative ')
     },deleteFile=FALSE)
     output$clemence <- renderImage({
         list(src="Data/Pokemon Clemence.jpg",alt="clemence",width=300,height=400,style='position : relative')
@@ -160,7 +160,7 @@ server <- function(input, output) {
         list(src="Data/Pokemon Oriane.png",alt="oriane",width=300,height=400,style='position : relative')
     },deleteFile=FALSE)
     output$margaux <- renderImage({
-        list(src="Data/Pokémon Margaux.png",alt="margaux",width=300,height=400,style='position : relative')
+        list(src="Data/Pokemon Margaux.png",alt="margaux",width=300,height=400,style='position : relative')
     },deleteFile=FALSE)
     
     #Résumé statistique
