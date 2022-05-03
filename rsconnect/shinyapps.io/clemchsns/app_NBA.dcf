@@ -1,0 +1,14 @@
+name: app_NBA
+title: app_NBA
+username:
+account: clemchsns
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6224139
+bundleId: 5865946
+url: https://clemchsns.shinyapps.io/app_NBA/
+when: 1651605315.53452
+lastSyncTime: 1651605315.53452
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: README.md
