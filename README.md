@@ -9,19 +9,26 @@ Nous avons réalisé ce projet pour finaliser notre licence MIASHS (Mathématiqu
 ## 🚀 Fonctionnalités
 
 📊 Visualisation des statistiques des équipes et joueurs (paniers marqués, efficacité au tir, etc.)
+
 🌍 Carte interactive des équipes de la NBA
+
 🏀 Exploration des caractéristiques des joueurs (taille, main dominante, etc.)
+
 📈 Graphiques interactifs 
+
 🔎 Recherche avancée par année et équipe
 
-app.R : Code principal de l’application Shiny
-Data/ : Contient les fichiers de données (NBA_Season_Data.csv, players.csv)
-www/ : Ressources statiques (images, styles CSS)
-🛠 Technologies utilisées
+## 📁 Arborescence
 
-## ⚙️ Techniques 
-R Shiny pour l’interface interactive
-ggplot2 pour les visualisations
-leaflet pour la carte interactive
-DT pour les tables dynamiques
-shinydashboard pour l’organisation de l’interface
+- app.R : Code principal de l’application Shiny
+- Data/ : Contient les fichiers de données (NBA_Season_Data.csv, players.csv)
+- www/ : Ressources statiques (images, styles CSS)
+
+
+## ⚙️ Techniques utilisées
+
+- R Shiny pour l’interface interactive
+- ggplot2 pour les visualisations
+- leaflet pour la carte interactive
+- DT pour les tables dynamiques
+- shinydashboard pour l’organisation de l’interface
